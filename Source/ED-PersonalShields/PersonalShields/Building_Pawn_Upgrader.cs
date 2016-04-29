@@ -14,7 +14,7 @@ namespace Enhanced_Development.PersonalShields
     {
         #region Variables
 
-        public float MAX_DISTANCE = 2.0f;
+        public float MAX_DISTANCE = 5.0f;
         public bool flag_charge = false;
         CompPowerTrader power;
         //NanoConnector nanoConnector;
