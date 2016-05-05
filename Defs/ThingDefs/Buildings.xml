@@ -54,7 +54,7 @@
 			<drawSize>(1,1)</drawSize>
     </graphicData>
 		<uiIconPath>Things/ShieldBuilding_Red</uiIconPath>
-		<specialDisplayRadius>2</specialDisplayRadius>
+		<specialDisplayRadius>5</specialDisplayRadius>
 		<comps>
 			<li Class="CompProperties_Power">
 				<compClass>CompPowerTrader</compClass>

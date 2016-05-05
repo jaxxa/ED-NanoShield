@@ -18,7 +18,7 @@ namespace Enhanced_Development.PersonalShields.Animal
     class ShieldPawn : Pawn
     {
         private int m_energy = 0;
-        public int maxEnergy = 100;
+        public int maxEnergy = 255;
         private ShieldStatePawn m_ShieldState = ShieldStatePawn.Inactive;
 
         private SoundDef SoundAbsorbDamage = SoundDef.Named("PersonalShieldAbsorbDamage");
@@ -27,7 +27,7 @@ namespace Enhanced_Development.PersonalShields.Animal
         public override void SpawnSetup()
         {
             base.SpawnSetup();
-            this.maxEnergy = 100;
+            this.maxEnergy = 255;
         }
 
         public override void ExposeData()
