@@ -10,6 +10,7 @@ using Enhanced_Development.PersonalShields.Nano;
 
 namespace Enhanced_Development.PersonalShields
 {
+    [StaticConstructorOnStartup]
     public class Building_Pawn_Upgrader : Building
     {
         #region Variables

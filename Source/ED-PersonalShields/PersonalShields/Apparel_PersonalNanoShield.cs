@@ -108,7 +108,7 @@ namespace Enhanced_Development.PersonalShields
             {
                 //return !this.wearer.Dead && !this.wearer.Downed && (!this.wearer.IsPrisonerOfColony || (this.wearer.BrokenStateDef != null && this.wearer.BrokenStateDef == BrokenStateDefOf.Berserk)) && ((this.wearer.Drafted) || this.wearer.Faction.HostileTo(Faction.OfColony) || Find.TickManager.TicksGame < this.lastKeepDisplayTick + this.KeepDisplayingTicks);
 
-                return !this.wearer.Dead && !this.wearer.Downed && (!this.wearer.IsPrisonerOfColony || this.wearer.MentalStateDef != null && this.wearer.MentalStateDef.isAggro) && (this.wearer.Drafted || FactionUtility.HostileTo(this.wearer.Faction, Faction.OfColony) || Find.TickManager.TicksGame < this.lastKeepDisplayTick + this.KeepDisplayingTicks);
+                return !this.wearer.Dead && !this.wearer.Downed && (!this.wearer.IsPrisonerOfColony || this.wearer.MentalStateDef != null && this.wearer.MentalStateDef.IsAggro) && (this.wearer.Drafted || FactionUtility.HostileTo(this.wearer.Faction, Faction.OfPlayer) || Find.TickManager.TicksGame < this.lastKeepDisplayTick + this.KeepDisplayingTicks);
             }
         }
 
@@ -282,6 +282,8 @@ namespace Enhanced_Development.PersonalShields
                 Graphics.DrawMesh(MeshPool.plane10, matrix, BubbleMat, 0);
             }
         }
+
+        [StaticConstructorOnStartup]
         internal class Gizmo_PersonalShieldStatus : Gizmo
         {
             //Links

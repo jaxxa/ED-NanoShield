@@ -14,7 +14,7 @@
 		
 	<ThingDef ParentName="BuildingBase" Name="ShieldBase" Abstract="True">
 		<category>Building</category>
-		<altitudeLayer>BuildingTall</altitudeLayer>
+		<altitudeLayer>Building</altitudeLayer>
 		<leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
 		<blockLight>true</blockLight>
 		<drawerType>MapMeshAndRealTime</drawerType>
