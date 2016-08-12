@@ -26,6 +26,17 @@ namespace Enhanced_Development.PersonalShields
 
         #endregion
 
+
+        static Building_Pawn_Upgrader()
+        {
+
+
+            UI_UPGRADE = ContentFinder<Texture2D>.Get("UI/Upgrade", true);
+            UI_CHARGE_OFF = ContentFinder<Texture2D>.Get("UI/ChargeOFF", true);
+            UI_CHARGE_ON = ContentFinder<Texture2D>.Get("UI/ChargeON", true);
+
+        }
+
         //Dummy override
         public override void PostMake()
         {
@@ -36,10 +47,6 @@ namespace Enhanced_Development.PersonalShields
         {
             base.SpawnSetup();
             this.power = base.GetComp<CompPowerTrader>();
-
-            UI_UPGRADE = ContentFinder<Texture2D>.Get("UI/Upgrade", true);
-            UI_CHARGE_OFF = ContentFinder<Texture2D>.Get("UI/ChargeOFF", true);
-            UI_CHARGE_ON = ContentFinder<Texture2D>.Get("UI/ChargeON", true);
         }
 
         public override void Tick()
@@ -277,7 +284,7 @@ namespace Enhanced_Development.PersonalShields
                 IEnumerable<Pawn> pawns = Find.MapPawns.FreeColonists;
 
                 if (pawns != null)
-                {                    
+                {
                     IEnumerable<Pawn> closePawns = Enhanced_Development.Utilities.Utilities.findPawnsInColony(this.Position, this.MAX_DISTANCE);
 
                     if (closePawns != null)
@@ -309,7 +316,7 @@ namespace Enhanced_Development.PersonalShields
                                     }
                                 }
                             }
-                            
+
                             if (currentPawn.GetType() == typeof(Enhanced_Development.PersonalShields.Animal.ShieldPawn))
                             {
                                 Enhanced_Development.PersonalShields.Animal.ShieldPawn currentShieldPawn;
