@@ -29,12 +29,9 @@ namespace Enhanced_Development.PersonalShields
 
         static Building_Pawn_Upgrader()
         {
-
-
             UI_UPGRADE = ContentFinder<Texture2D>.Get("UI/Upgrade", true);
             UI_CHARGE_OFF = ContentFinder<Texture2D>.Get("UI/ChargeOFF", true);
             UI_CHARGE_ON = ContentFinder<Texture2D>.Get("UI/ChargeON", true);
-
         }
 
         //Dummy override
@@ -244,30 +241,40 @@ namespace Enhanced_Development.PersonalShields
         {
             IEnumerable<Pawn> closePawns = Enhanced_Development.Utilities.Utilities.findPawnsInColony(this.Position, this.MAX_DISTANCE);
 
+            bool _AnyUpgraded = false;
+
             if (closePawns != null)
             {
                 foreach (Pawn currentPawn in closePawns.ToList())
                 {
                     if (currentPawn.apparel != null)
                     {
-                        ThingDef personalShieldDef = ThingDef.Named("Apparel_PersonalNanoShield");
+                        //ThingDef personalShieldDef = ThingDef.Named("Apparel_PersonalNanoShield");
 
-                        ThingDef stuff = GenStuff.RandomStuffFor(personalShieldDef);
-                        Thing personalShield = ThingMaker.MakeThing(personalShieldDef, stuff);
-                        currentPawn.apparel.Wear((Apparel)personalShield);
+                        //ThingDef stuff = GenStuff.RandomStuffFor(personalShieldDef);
+                        //Thing personalShield = ThingMaker.MakeThing(personalShieldDef, stuff);
+                        //currentPawn.apparel.Wear((Apparel)personalShield);
 
                     }
                     else if (currentPawn.GetType() == typeof(Enhanced_Development.PersonalShields.Animal.ShieldPawn))
                     {
+                        
                         Enhanced_Development.PersonalShields.Animal.ShieldPawn currentShieldPawn;
                         currentShieldPawn = (Enhanced_Development.PersonalShields.Animal.ShieldPawn)currentPawn;
 
                         if (currentShieldPawn.ShieldState == Animal.ShieldStatePawn.Inactive)
                         {
+                            _AnyUpgraded = true;
+                            Messages.Message("Activating Shields on " + currentShieldPawn.Name, MessageSound.Benefit);
                             currentShieldPawn.recharge(1);
                         }
                     }
                 }
+            }
+
+            if (!_AnyUpgraded)
+            {
+                Messages.Message("No Valid Animals Found.", MessageSound.RejectInput);
             }
 
             return false;
