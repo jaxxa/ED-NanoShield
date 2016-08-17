@@ -49,7 +49,7 @@
   <ItemGroup>
     <Compile Include="PersonalShields\Animal\ShieldPawn.cs" />
     <Compile Include="PersonalShields\Apparel_PersonalNanoShield.cs" />
-    <Compile Include="PersonalShields\Building_Pawn_Upgrader.cs" />
+    <Compile Include="PersonalShields\Building_Shield_Charger.cs" />
     <Compile Include="PersonalShields\Nano\NanoManager.cs" />
     <Compile Include="PersonalShields\ThingDef_PersonalNanoShield.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

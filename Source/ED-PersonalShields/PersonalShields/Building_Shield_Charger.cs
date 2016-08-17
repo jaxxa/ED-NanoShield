@@ -11,7 +11,7 @@ using Enhanced_Development.PersonalShields.Nano;
 namespace Enhanced_Development.PersonalShields
 {
     [StaticConstructorOnStartup]
-    public class Building_Pawn_Upgrader : Building
+    public class Building_Shield_Charger : Building
     {
         #region Variables
 
@@ -27,8 +27,9 @@ namespace Enhanced_Development.PersonalShields
         #endregion
 
 
-        static Building_Pawn_Upgrader()
+        static Building_Shield_Charger()
         {
+           //Log.Message("Getting graphics");
             UI_UPGRADE = ContentFinder<Texture2D>.Get("UI/Upgrade", true);
             UI_CHARGE_OFF = ContentFinder<Texture2D>.Get("UI/ChargeOFF", true);
             UI_CHARGE_ON = ContentFinder<Texture2D>.Get("UI/ChargeON", true);
@@ -132,8 +133,8 @@ namespace Enhanced_Development.PersonalShields
                 //act.action = () => Designator_Deconstruct.DesignateDeconstruct(this);
                 act.action = () => this.tryReplacePawn();
                 act.icon = UI_UPGRADE;
-                act.defaultLabel = "Upgrade To NanoShield";
-                act.defaultDesc = "Upgrade To NanoShield";
+                act.defaultLabel = "Upgrade Animal";
+                act.defaultDesc = "Upgrade To Animal";
                 act.activateSound = SoundDef.Named("Click");
                 //act.hotKey = KeyBindingDefOf.DesignatorDeconstruct;
                 //act.groupKey = 689736;

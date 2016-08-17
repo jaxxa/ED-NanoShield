@@ -39,7 +39,6 @@ namespace Enhanced_Development.PersonalShields.Animal
             Scribe_Values.LookValue<ShieldStatePawn>(ref this.m_ShieldState, "shieldState", ShieldStatePawn.Inactive, false);
         }
 
-
         #region Gizmoes
         /*
 
@@ -258,7 +257,6 @@ namespace Enhanced_Development.PersonalShields.Animal
 
             return base.GetInspectString();
         }
-
 
         public bool isCharged()
         {
