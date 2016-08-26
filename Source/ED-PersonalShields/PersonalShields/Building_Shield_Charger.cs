@@ -275,7 +275,7 @@ namespace Enhanced_Development.PersonalShields
 
             if (!_AnyUpgraded)
             {
-                Messages.Message("No Valid Animals Found.", MessageSound.RejectInput);
+                Messages.Message("No Valid Animals Found. Animals must be Tame and Spawned while the mod ED-PersonalAnimalShields was enabled.", MessageSound.RejectInput);
             }
 
             return false;
