@@ -1,14 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
 	<name>ED-PersonalNanoShields</name>
-	<targetVersion>0.14.1249</targetVersion>
+	<targetVersion>0.15.1284</targetVersion>
 	<author>Jaxxa</author>
 	<url>https://ludeon.com/forums/index.php?topic=18995.0</url>
-	<description>Version: 02.00.00
+	<description>Version: 03.00.00
 	
 Discussion, Non Steam Downloads and GitHub Repositories of this mod is available at: https://ludeon.com/forums/index.php?topic=18995
 Please Use that Thread for Discussion / Feedback that would like me to reply to. 
 Ideally Bugs should be logged on GitHub although in the discussion thread is also fine.
+
+Yes this does throw a bunch of warning, as far as I can tell they are harmless and not easily fixable without adding additional complexity that I do not want to do for fear of adding additional issues.
+This should be fixed in an upcoming complete rewrite.
 
 This module adds an alternate version of Personal Shields into the game. 
 Technically I had the first version of my personal shields out before they were in the base game, so the base game is the alternate version. 

@@ -215,11 +215,11 @@ namespace Enhanced_Development.PersonalShields.Animal
             Vector3 impactAngleVect = Vector3Utility.HorizontalVectorFromAngle(dinfo.Angle);
             Vector3 loc = this.TrueCenter() + impactAngleVect.RotatedBy(180f) * 0.5f;
             float num = Mathf.Min(10f, 2f + (float)dinfo.Amount / 10f);
-            MoteThrower.ThrowStatic(loc, ThingDefOf.Mote_ExplosionFlash, num);
+            MoteMaker.MakeStaticMote(loc, ThingDefOf.Mote_ExplosionFlash, num);
             int num2 = (int)num;
             for (int i = 0; i < num2; i++)
             {
-                MoteThrower.ThrowDustPuff(loc, Rand.Range(0.8f, 1.2f));
+                MoteMaker.ThrowDustPuff(loc, Rand.Range(0.8f, 1.2f));
             }
             //this.lastAbsorbDamageTick = Find.TickManager.TicksGame;
             //this.KeepDisplaying();
@@ -235,11 +235,11 @@ namespace Enhanced_Development.PersonalShields.Animal
             this.ShieldState = ShieldStatePawn.Charging;
 
             Verse.Sound.SoundStarter.PlayOneShot(SoundBreak, this.Position);
-            MoteThrower.ThrowStatic(this.TrueCenter(), ThingDefOf.Mote_ExplosionFlash, 12f);
+            MoteMaker.MakeStaticMote(this.TrueCenter(), ThingDefOf.Mote_ExplosionFlash, 12f);
             for (int i = 0; i < 6; i++)
             {
                 UnityEngine.Vector3 loc = this.TrueCenter() + Vector3Utility.HorizontalVectorFromAngle((float)Rand.Range(0, 360)) * Rand.Range(0.3f, 0.6f);
-                MoteThrower.ThrowDustPuff(loc, Rand.Range(0.8f, 1.2f));
+                MoteMaker.ThrowDustPuff(loc, Rand.Range(0.8f, 1.2f));
             }
             this.m_energy = 0;
         }
