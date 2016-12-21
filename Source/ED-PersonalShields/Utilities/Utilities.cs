@@ -9,13 +9,13 @@ namespace Enhanced_Development.Utilities
 {
     public class Utilities
     {
-        public static IEnumerable<Pawn> findPawnsInColony(IntVec3 position, float radius)
+        public static IEnumerable<Pawn> findPawnsInColony(IntVec3 position, Map map, float radius)
         {
             //IEnumerable<Pawn> pawns = Find.ListerPawns.ColonistsAndPrisoners;
             //IEnumerable<Pawn> pawns = Find.ListerPawns.FreeColonists;
             //IEnumerable<Pawn> pawns = Find.ListerPawns.AllPawns.Where(item => item.IsColonistPlayerControlled || item.IsColonistPlayerControlled);
             
-            IEnumerable<Pawn> pawns = Find.MapPawns.PawnsInFaction(Faction.OfPlayer);
+            IEnumerable<Pawn> pawns =  map.mapPawns.PawnsInFaction(Faction.OfPlayer);
 
             IEnumerable<Pawn> closePawns;
 

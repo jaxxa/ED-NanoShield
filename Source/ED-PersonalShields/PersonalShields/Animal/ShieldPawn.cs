@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using Verse;
+using Verse.Sound;
 
 namespace Enhanced_Development.PersonalShields.Animal
 {
@@ -24,9 +25,9 @@ namespace Enhanced_Development.PersonalShields.Animal
         private SoundDef SoundAbsorbDamage = SoundDef.Named("PersonalShieldAbsorbDamage");
         private SoundDef SoundBreak = SoundDef.Named("PersonalShieldBroken");
 
-        public override void SpawnSetup()
+        public override void SpawnSetup(Map map)
         {
-            base.SpawnSetup();
+            base.SpawnSetup(map);
             this.maxEnergy = 255;
         }
 
@@ -158,31 +159,20 @@ namespace Enhanced_Development.PersonalShields.Animal
 
                 absorbed = true;
 
-                if (dinfo.Def == DamageDefOf.HealGlobal)
-                {
-                    absorbed = false;
-                }
-
-                if (dinfo.Def == DamageDefOf.HealInjury)
-                {
-                    absorbed = false;
-                }
-
-                if (dinfo.Def == DamageDefOf.Repair)
-                {
-                    absorbed = false;
-                }
-
-                if (dinfo.Def == DamageDefOf.RestoreBodyPart)
-                {
-                    absorbed = false;
-                }
-
                 if (dinfo.Def == DamageDefOf.SurgicalCut)
                 {
                     absorbed = false;
                 }
 
+                if (dinfo.Def == DamageDefOf.Deterioration)
+                {
+                    absorbed = false;
+                }
+
+                if (dinfo.Def == DamageDefOf.Extinguish)
+                {
+                    absorbed = false;
+                }
 
                 if (absorbed)
                 {
@@ -211,15 +201,15 @@ namespace Enhanced_Development.PersonalShields.Animal
             this.m_energy -= dinfo.Amount;
 
 
-            Verse.Sound.SoundStarter.PlayOneShot(SoundAbsorbDamage, this.Position);
+            Verse.Sound.SoundStarter.PlayOneShot(SoundAbsorbDamage, (SoundInfo)new TargetInfo(this.Position, this.Map, false));
             Vector3 impactAngleVect = Vector3Utility.HorizontalVectorFromAngle(dinfo.Angle);
             Vector3 loc = this.TrueCenter() + impactAngleVect.RotatedBy(180f) * 0.5f;
             float num = Mathf.Min(10f, 2f + (float)dinfo.Amount / 10f);
-            MoteMaker.MakeStaticMote(loc, ThingDefOf.Mote_ExplosionFlash, num);
+            MoteMaker.MakeStaticMote(loc.ToIntVec3(), this.Map, ThingDefOf.Mote_ExplosionFlash, num);
             int num2 = (int)num;
             for (int i = 0; i < num2; i++)
             {
-                MoteMaker.ThrowDustPuff(loc, Rand.Range(0.8f, 1.2f));
+                MoteMaker.ThrowDustPuff(loc, this.Map, Rand.Range(0.8f, 1.2f));
             }
             //this.lastAbsorbDamageTick = Find.TickManager.TicksGame;
             //this.KeepDisplaying();
@@ -234,12 +224,12 @@ namespace Enhanced_Development.PersonalShields.Animal
         {
             this.ShieldState = ShieldStatePawn.Charging;
 
-            Verse.Sound.SoundStarter.PlayOneShot(SoundBreak, this.Position);
-            MoteMaker.MakeStaticMote(this.TrueCenter(), ThingDefOf.Mote_ExplosionFlash, 12f);
+            Verse.Sound.SoundStarter.PlayOneShot(SoundBreak, (SoundInfo)new TargetInfo(this.Position, this.Map, false));
+            MoteMaker.MakeStaticMote(this.TrueCenter(), this.Map, ThingDefOf.Mote_ExplosionFlash, 12f);
             for (int i = 0; i < 6; i++)
             {
                 UnityEngine.Vector3 loc = this.TrueCenter() + Vector3Utility.HorizontalVectorFromAngle((float)Rand.Range(0, 360)) * Rand.Range(0.3f, 0.6f);
-                MoteMaker.ThrowDustPuff(loc, Rand.Range(0.8f, 1.2f));
+                MoteMaker.ThrowDustPuff(loc, this.Map, Rand.Range(0.8f, 1.2f));
             }
             this.m_energy = 0;
         }

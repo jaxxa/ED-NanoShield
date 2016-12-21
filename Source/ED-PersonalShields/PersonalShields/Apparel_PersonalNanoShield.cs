@@ -168,27 +168,17 @@ namespace Enhanced_Development.PersonalShields
             if (this.ShieldState == RimWorld.ShieldState.Active)
             {
 
-                if (dinfo.Def == DamageDefOf.HealGlobal)
-                {
-                    return false;
-                }
-
-                if (dinfo.Def == DamageDefOf.HealInjury)
-                {
-                    return false;
-                }
-
-                if (dinfo.Def == DamageDefOf.Repair)
-                {
-                    return false;
-                }
-
-                if (dinfo.Def == DamageDefOf.RestoreBodyPart)
-                {
-                    return false;
-                }
-
                 if (dinfo.Def == DamageDefOf.SurgicalCut)
+                {
+                    return false;
+                }
+
+                if (dinfo.Def == DamageDefOf.Deterioration)
+                {
+                    return false;
+                }
+
+                if (dinfo.Def == DamageDefOf.Extinguish)
                 {
                     return false;
                 }
@@ -218,15 +208,15 @@ namespace Enhanced_Development.PersonalShields
 
         private void AbsorbedDamage(DamageInfo dinfo)
         {
-            SoundAbsorbDamage.PlayOneShot(this.wearer.Position);
+            SoundAbsorbDamage.PlayOneShot((SoundInfo)new TargetInfo(this.wearer.Position, this.Map, false));
             this.impactAngleVect = Vector3Utility.HorizontalVectorFromAngle(dinfo.Angle);
             Vector3 loc = this.wearer.TrueCenter() + this.impactAngleVect.RotatedBy(180f) * 0.5f;
             float num = Mathf.Min(10f, 2f + (float)dinfo.Amount / 10f);
-            MoteMaker.MakeStaticMote(loc, ThingDefOf.Mote_ExplosionFlash, num);
+            MoteMaker.MakeStaticMote(loc, this.Map, ThingDefOf.Mote_ExplosionFlash, num);
             int num2 = (int)num;
             for (int i = 0; i < num2; i++)
             {
-                MoteMaker.ThrowDustPuff(loc, Rand.Range(0.8f, 1.2f));
+                MoteMaker.ThrowDustPuff(loc, this.Map, Rand.Range(0.8f, 1.2f));
             }
             this.lastAbsorbDamageTick = Find.TickManager.TicksGame;
             this.KeepDisplaying();
@@ -234,12 +224,12 @@ namespace Enhanced_Development.PersonalShields
 
         private void Break()
         {
-            SoundBreak.PlayOneShot(this.wearer.Position);
-            MoteMaker.MakeStaticMote(this.wearer.TrueCenter(), ThingDefOf.Mote_ExplosionFlash, 12f);
+            SoundBreak.PlayOneShot((SoundInfo)new TargetInfo(this.wearer.Position, this.Map, false));
+            MoteMaker.MakeStaticMote(this.wearer.TrueCenter(), this.Map, ThingDefOf.Mote_ExplosionFlash, 12f);
             for (int i = 0; i < 6; i++)
             {
                 Vector3 loc = this.wearer.TrueCenter() + Vector3Utility.HorizontalVectorFromAngle((float)Rand.Range(0, 360)) * Rand.Range(0.3f, 0.6f);
-                MoteMaker.ThrowDustPuff(loc, Rand.Range(0.8f, 1.2f));
+                MoteMaker.ThrowDustPuff(loc,this.Map, Rand.Range(0.8f, 1.2f));
             }
             this.energy = 0;
             //this.ticksToReset = this.StartingTicksToReset;
@@ -247,8 +237,8 @@ namespace Enhanced_Development.PersonalShields
 
         private void Reset()
         {
-            SoundReset.PlayOneShot(this.wearer.Position);
-            MoteMaker.ThrowLightningGlow(this.wearer.TrueCenter(), 3f);
+            SoundReset.PlayOneShot((SoundInfo)new TargetInfo(this.wearer.Position, this.Map, false));
+            MoteMaker.ThrowLightningGlow(this.wearer.TrueCenter(), this.Map, 3f);
             //this.ticksToReset = -1;
             //this.energy = this.EnergyOnReset;
         }

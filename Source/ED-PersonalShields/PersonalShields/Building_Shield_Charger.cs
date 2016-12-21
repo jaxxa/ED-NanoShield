@@ -41,9 +41,9 @@ namespace Enhanced_Development.PersonalShields
             base.PostMake();
         }
         //On spawn, get the power component reference
-        public override void SpawnSetup()
+        public override void SpawnSetup(Map map)
         {
-            base.SpawnSetup();
+            base.SpawnSetup(map);
             this.power = base.GetComp<CompPowerTrader>();
         }
 
@@ -240,7 +240,7 @@ namespace Enhanced_Development.PersonalShields
 
         private bool upgradePawns()
         {
-            IEnumerable<Pawn> closePawns = Enhanced_Development.Utilities.Utilities.findPawnsInColony(this.Position, this.MAX_DISTANCE);
+            IEnumerable<Pawn> closePawns = Enhanced_Development.Utilities.Utilities.findPawnsInColony(this.Position, this.Map, this.MAX_DISTANCE);
 
             bool _AnyUpgraded = false;
 
@@ -289,11 +289,11 @@ namespace Enhanced_Development.PersonalShields
             {
 
                 //IEnumerable<Pawn> pawns = Find.ListerPawns.ColonistsAndPrisoners;
-                IEnumerable<Pawn> pawns = Find.MapPawns.FreeColonists;
+                IEnumerable<Pawn> pawns = this.Map.mapPawns.FreeColonists;
 
                 if (pawns != null)
                 {
-                    IEnumerable<Pawn> closePawns = Enhanced_Development.Utilities.Utilities.findPawnsInColony(this.Position, this.MAX_DISTANCE);
+                    IEnumerable<Pawn> closePawns = Enhanced_Development.Utilities.Utilities.findPawnsInColony(this.Position, this.Map, this.MAX_DISTANCE);
 
                     if (closePawns != null)
                     {
