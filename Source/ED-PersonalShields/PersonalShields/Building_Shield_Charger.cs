@@ -55,13 +55,14 @@ namespace Enhanced_Development.PersonalShields
             if (this.power.PowerOn == true)
             {
                 NanoManager.tick();
-                if (this.flag_charge)
-                {
-                    this.rechargePawns();
-                }
+            }
+
+            //This no longer requires Power inorder to be usable in Caravans.
+            if (this.flag_charge)
+            {
+                this.rechargePawns();
             }
         }
-
 
         public override void Draw()
         {

@@ -11,7 +11,7 @@
 		<leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
 		<filthLeaving>BuildingRubble</filthLeaving>
 	</ThingDef>
-		
+
 	<ThingDef ParentName="BuildingBase" Name="ShieldBase" Abstract="True">
 		<category>Building</category>
 		<altitudeLayer>Building</altitudeLayer>
@@ -40,21 +40,24 @@
 		<selectable>true</selectable>
 		<tickerType>Normal</tickerType>
 	</ThingDef>
-	
-	
+
+
 	<ThingDef ParentName="ShieldBase">
 		<defName>Building_Shield_Charger</defName>
 		<label>Nanite Shield Charging Station</label>
 		<description>Recharges Nanite Shield Modulators to colonists to protect them from injury and adds Shields to Animals. Human Shields can be crafted at the Machining Table</description>
 		<thingClass>Enhanced_Development.PersonalShields.Building_Shield_Charger</thingClass>
-		<researchPrerequisites><li>Personal_Shield_research</li></researchPrerequisites>
-    <graphicData>
-		<texPath>Things/ShieldBuilding_Red</texPath>
-		<graphicClass>Graphic_Single</graphicClass>
+		<researchPrerequisites>
+			<li>Personal_Shield_research</li>
+		</researchPrerequisites>
+		<graphicData>
+			<texPath>Things/ShieldBuilding_Red</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
 			<drawSize>(1,1)</drawSize>
-    </graphicData>
+		</graphicData>
 		<uiIconPath>Things/ShieldBuilding_Red</uiIconPath>
 		<specialDisplayRadius>5</specialDisplayRadius>
+		<minifiedDef>MinifiedSculpture</minifiedDef>
 		<comps>
 			<li Class="CompProperties_Power">
 				<compClass>CompPowerTrader</compClass>
@@ -64,5 +67,5 @@
 			<li Class="CompProperties_Breakdownable"/>
 		</comps>
 	</ThingDef>
-	
+
 </Things>
