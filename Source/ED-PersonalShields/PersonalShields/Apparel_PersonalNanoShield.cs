@@ -10,6 +10,8 @@ using RimWorld;
 
 namespace Enhanced_Development.PersonalShields
 {
+
+    [StaticConstructorOnStartup]
     public class Apparel_PersonalNanoShield : Apparel
     {
         private float MinDrawSize;
@@ -24,7 +26,7 @@ namespace Enhanced_Development.PersonalShields
         private int lastAbsorbDamageTick = -9999;
         private Vector3 impactAngleVect;
         private int lastKeepDisplayTick = -9999;
-        private Material BubbleMat = MaterialPool.MatFrom("Other/ShieldBubble", ShaderDatabase.Transparent);
+        private static Material BubbleMat;// = MaterialPool.MatFrom("Other/ShieldBubble", ShaderDatabase.Transparent);
         //private int StartingTicksToReset = 3200;
         //private float EnergyOnReset = 0.2f;
         //private float EnergyLossPerDamage;
@@ -32,6 +34,11 @@ namespace Enhanced_Development.PersonalShields
         private SoundDef SoundAbsorbDamage = SoundDef.Named("PersonalShieldAbsorbDamage");
         private SoundDef SoundBreak = SoundDef.Named("PersonalShieldBroken");
         private SoundDef SoundReset = SoundDef.Named("PersonalShieldReset");
+
+        static Apparel_PersonalNanoShield()
+        {
+            Apparel_PersonalNanoShield.BubbleMat = MaterialPool.MatFrom("Other/ShieldBubble", ShaderDatabase.Transparent);
+        }
 
         private int tickFlag = 0;
         public void GetParametersFromXml()
@@ -44,10 +51,10 @@ namespace Enhanced_Development.PersonalShields
 
             isRotating = param.isRotating;
 
-            if (param.bubbleGraphicPath != null)
-            {
-                BubbleMat = MaterialPool.MatFrom(param.bubbleGraphicPath, ShaderDatabase.Transparent);
-            }
+            //if (param.bubbleGraphicPath != null)
+            //{
+            //    BubbleMat = MaterialPool.MatFrom(param.bubbleGraphicPath, ShaderDatabase.Transparent);
+            //}
             if (param.soundAbsorb != null)
             {
                 SoundAbsorbDamage = SoundDef.Named(param.soundAbsorb);
