@@ -4,11 +4,9 @@
 	<targetVersion>0.16.1361</targetVersion>
 	<author>Jaxxa</author>
 	<url>https://ludeon.com/forums/index.php?topic=18995.0</url>
-	<description>Version: 03.00.00
+	<description>Version: 04.00.00
 	
 Discussion, Non Steam Downloads and GitHub Repositories of this mod is available at: https://ludeon.com/forums/index.php?topic=18995
-Please Use that Thread for Discussion / Feedback that would like me to reply to. 
-Ideally Bugs should be logged on GitHub although in the discussion thread is also fine.
 
 Yes this does throw a bunch of warning, as far as I can tell they are harmless and not easily fixable without adding additional complexity that I do not want to do for fear of adding additional issues.
 This should be fixed in an upcoming complete rewrite.
