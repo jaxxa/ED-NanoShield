@@ -1,5 +1,5 @@
-# ED-PersonalNanoShields
-This is the Readme for the Enhanced Development Mod, ED-PersonalNanoShields, for the Game Rimworld.
+# ED-NanoShield
+This is the Readme for the Mod, ED-NanoShield, for the Game Rimworld.
 
 Additional details can be found in About.xml
 
@@ -17,3 +17,4 @@ Additional details can be found in About.xml
 04.00.00
 *Alpha 16 Update
 
+0.18.0.0
