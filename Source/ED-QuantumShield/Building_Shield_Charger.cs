@@ -12,7 +12,7 @@ using ED_NanoShield;
 namespace Enhanced_Development.PersonalShields
 {
     [StaticConstructorOnStartup]
-    public class Building_Shield_Charger : Building
+    public class Building_QuantumShield_Charger : Building
     {
         #region Variables
 
@@ -28,7 +28,7 @@ namespace Enhanced_Development.PersonalShields
         #endregion
 
 
-        static Building_Shield_Charger()
+        static Building_QuantumShield_Charger()
         {
             //Log.Message("Getting graphics");
             UI_UPGRADE = ContentFinder<Texture2D>.Get("UI/Upgrade", true);
@@ -53,16 +53,16 @@ namespace Enhanced_Development.PersonalShields
             //Log.Message("Tick");
             base.Tick();
 
-            if (this.power.PowerOn == true)
-            {
-                NanoManager.tick();
-            }
+            //if (this.power.PowerOn == true)
+            //{
+            //    NanoManager.tick();
+            //}
 
-            //This no longer requires Power inorder to be usable in Caravans.
-            if (this.flag_charge)
-            {
-                this.rechargePawns();
-            }
+            ////This no longer requires Power inorder to be usable in Caravans.
+            //if (this.flag_charge)
+            //{
+            //    this.rechargePawns();
+            //}
         }
 
         public override void Draw()
@@ -74,35 +74,37 @@ namespace Enhanced_Development.PersonalShields
         {
             GenDraw.DrawRadiusRing(base.Position, this.MAX_DISTANCE);
         }
-        public override string GetInspectString()
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            //stringBuilder.Append(base.GetInspectString());
-            ///stringBuilder.Append(shieldField.GetInspectString());
 
-            /*
-            for (int i = 0, l = sparksParticle.Length; i < l; i++)
-            {
-                stringBuilder.AppendLine("   " + (i + 1) + ". " + sparksParticle[i].currentDir + " -> " + sparksParticle[i].currentStep);
-            }*/
+        //public override string GetInspectString()
+        //{
+        //    StringBuilder stringBuilder = new StringBuilder();
+        //    //stringBuilder.Append(base.GetInspectString());
+        //    ///stringBuilder.Append(shieldField.GetInspectString());
 
-            string text;
+        //    /*
+        //    for (int i = 0, l = sparksParticle.Length; i < l; i++)
+        //    {
+        //        stringBuilder.AppendLine("   " + (i + 1) + ". " + sparksParticle[i].currentDir + " -> " + sparksParticle[i].currentStep);
+        //    }*/
 
-            text = "Nano Charge: " + NanoManager.getCurrentCharge() + " / " + NanoManager.getMaxCharge();
-            stringBuilder.AppendLine(text);
+        //    string text;
 
-            if (power != null)
-            {
-                text = power.CompInspectStringExtra();
-                if (!text.NullOrEmpty())
-                {
-                    stringBuilder.AppendLine(text);
-                }
-            }
+        //    text = "Nano Charge: " + NanoManager.getCurrentCharge() + " / " + NanoManager.getMaxCharge();
+        //    stringBuilder.AppendLine(text);
+
+        //    if (power != null)
+        //    {
+        //        text = power.CompInspectStringExtra();
+        //        if (!text.NullOrEmpty())
+        //        {
+        //            stringBuilder.AppendLine(text);
+        //        }
+        //    }
 
 
-            return stringBuilder.ToString();
-        }
+        //    return stringBuilder.ToString();
+        //}
+
         //Saving game
         public override void ExposeData()
         {
@@ -133,11 +135,11 @@ namespace Enhanced_Development.PersonalShields
             {
                 Command_Action act = new Command_Action();
                 //act.action = () => Designator_Deconstruct.DesignateDeconstruct(this);
-                act.action = () => this.tryReplacePawn();
+                act.action = () => this.upgradePawns();
                 act.icon = UI_UPGRADE;
-                act.defaultLabel = "Upgrade Animal";
-                act.defaultDesc = "Upgrade To Animal";
-                act.activateSound = SoundDef.Named("Click");
+                act.defaultLabel = "Upgrade Pawn";
+                act.defaultDesc = "Upgrade Pawn";
+                //act.activateSound = SoundDef.Named("Click");
                 //act.hotKey = KeyBindingDefOf.DesignatorDeconstruct;
                 //act.groupKey = 689736;
                 yield return act;
@@ -151,7 +153,7 @@ namespace Enhanced_Development.PersonalShields
                 act.icon = UI_CHARGE_ON;
                 act.defaultLabel = "Charge Shields";
                 act.defaultDesc = "On";
-                act.activateSound = SoundDef.Named("Click");
+               // act.activateSound = SoundDef.Named("Click");
                 //act.hotKey = KeyBindingDefOf.DesignatorDeconstruct;
                 //act.groupKey = 689736;
                 yield return act;
@@ -164,7 +166,7 @@ namespace Enhanced_Development.PersonalShields
                 act.icon = UI_CHARGE_OFF;
                 act.defaultLabel = "Charge Shields";
                 act.defaultDesc = "Off";
-                act.activateSound = SoundDef.Named("Click");
+                //act.activateSound = SoundDef.Named("Click");
                 //act.hotKey = KeyBindingDefOf.DesignatorDeconstruct;
                 //act.groupKey = 689736;
                 yield return act;
@@ -232,16 +234,17 @@ namespace Enhanced_Development.PersonalShields
             flag_charge = !flag_charge;
         }
 
-        private void tryReplacePawn()
-        {
-            if (this.power.PowerOn == true)
-            {
-                this.upgradePawns();
-            }
-        }
+        //private void tryReplacePawn()
+        //{
+        //    if (this.power.PowerOn == true)
+        //    {
+        //        this.upgradePawns();
+        //    }
+        //}
 
         private bool upgradePawns()
         {
+            Log.Message("Upgrade");
             IEnumerable<Pawn> closePawns = Enhanced_Development.Utilities.Utilities.findPawnsInColony(this.Position, this.Map, this.MAX_DISTANCE);
 
             bool _AnyUpgraded = false;
@@ -262,15 +265,9 @@ namespace Enhanced_Development.PersonalShields
                     }
                     else
                     {
-
                         Log.Message("Skipping");
-                    }
-
-
-
-
-
-
+                    }    
+                
                     //if (currentPawn.apparel != null)
                     //{
                     //    //ThingDef personalShieldDef = ThingDef.Named("Apparel_PersonalNanoShield");
@@ -298,7 +295,7 @@ namespace Enhanced_Development.PersonalShields
 
             if (!_AnyUpgraded)
             {
-                Messages.Message("No Valid Animals Found. Animals must be Tame and Spawned while the mod ED-PersonalAnimalShields was enabled.", MessageSound.RejectInput);
+                Log.Message("No Valid Animals Found. Animals must be Tame and Spawned while the mod ED-PersonalAnimalShields was enabled.");
             }
 
             return false;

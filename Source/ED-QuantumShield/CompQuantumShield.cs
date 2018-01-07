@@ -20,6 +20,12 @@ namespace ED_NanoShield
             absorbed = true;
         }
 
+        public override void CompTick()
+        {
+            Log.Message("CompTick");
+            base.CompTick();
+        }
+
         public override void PostDraw()
         {
             base.PostDraw();
@@ -46,6 +52,12 @@ namespace ED_NanoShield
                 return (CompProperties_QuantumShield)this.props;
             }
         }
+
+        public override void PostExposeData()
+        {
+            base.PostExposeData();
+            
+        }
     }
 
     class CompProperties_QuantumShield : CompProperties
@@ -54,5 +66,6 @@ namespace ED_NanoShield
         {
             this.compClass = typeof(CompQuantumShield);
         }
+        
     }
 }

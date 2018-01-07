@@ -47,7 +47,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NanoShieldComp.cs" />
+    <Compile Include="CompQuantumShield.cs" />
     <Compile Include="Depreciated\Animal\ShieldPawn.cs" />
     <Compile Include="Depreciated\Animal\Apparel_PersonalNanoShield.cs" />
     <Compile Include="Building_Shield_Charger.cs" />
