@@ -7,6 +7,7 @@ using UnityEngine;
 using Verse;
 using RimWorld;
 using Enhanced_Development.PersonalShields.Nano;
+using ED_NanoShield;
 
 namespace Enhanced_Development.PersonalShields
 {
@@ -29,7 +30,7 @@ namespace Enhanced_Development.PersonalShields
 
         static Building_Shield_Charger()
         {
-           //Log.Message("Getting graphics");
+            //Log.Message("Getting graphics");
             UI_UPGRADE = ContentFinder<Texture2D>.Get("UI/Upgrade", true);
             UI_CHARGE_OFF = ContentFinder<Texture2D>.Get("UI/ChargeOFF", true);
             UI_CHARGE_ON = ContentFinder<Texture2D>.Get("UI/ChargeON", true);
@@ -249,28 +250,49 @@ namespace Enhanced_Development.PersonalShields
             {
                 foreach (Pawn currentPawn in closePawns.ToList())
                 {
-                    if (currentPawn.apparel != null)
+                    
+                    if (null == currentPawn.TryGetComp<CompQuantumShield>())
                     {
-                        //ThingDef personalShieldDef = ThingDef.Named("Apparel_PersonalNanoShield");
+                        Log.Message("Adding");
+                        CompProperties_QuantumShield _CompProp = new CompProperties_QuantumShield();
+                        currentPawn.GetCompByDef(_CompProp);
 
-                        //ThingDef stuff = GenStuff.RandomStuffFor(personalShieldDef);
-                        //Thing personalShield = ThingMaker.MakeThing(personalShieldDef, stuff);
-                        //currentPawn.apparel.Wear((Apparel)personalShield);
-
+                        currentPawn.def.comps.Add(_CompProp);
+                        currentPawn.InitializeComps();
                     }
-                    else if (currentPawn.GetType() == typeof(Enhanced_Development.PersonalShields.Animal.ShieldPawn))
+                    else
                     {
-                        
-                        Enhanced_Development.PersonalShields.Animal.ShieldPawn currentShieldPawn;
-                        currentShieldPawn = (Enhanced_Development.PersonalShields.Animal.ShieldPawn)currentPawn;
 
-                        if (currentShieldPawn.ShieldState == Animal.ShieldStatePawn.Inactive)
-                        {
-                            _AnyUpgraded = true;
-                            Messages.Message("Activating Shields on " + currentShieldPawn.Name, MessageSound.Benefit);
-                            currentShieldPawn.recharge(1);
-                        }
+                        Log.Message("Skipping");
                     }
+
+
+
+
+
+
+                    //if (currentPawn.apparel != null)
+                    //{
+                    //    //ThingDef personalShieldDef = ThingDef.Named("Apparel_PersonalNanoShield");
+
+                    //    //ThingDef stuff = GenStuff.RandomStuffFor(personalShieldDef);
+                    //    //Thing personalShield = ThingMaker.MakeThing(personalShieldDef, stuff);
+                    //    //currentPawn.apparel.Wear((Apparel)personalShield);
+
+                    //}
+                    //else if (currentPawn.GetType() == typeof(Enhanced_Development.PersonalShields.Animal.ShieldPawn))
+                    //{
+
+                    //    Enhanced_Development.PersonalShields.Animal.ShieldPawn currentShieldPawn;
+                    //    currentShieldPawn = (Enhanced_Development.PersonalShields.Animal.ShieldPawn)currentPawn;
+
+                    //    if (currentShieldPawn.ShieldState == Animal.ShieldStatePawn.Inactive)
+                    //    {
+                    //        _AnyUpgraded = true;
+                    //        Messages.Message("Activating Shields on " + currentShieldPawn.Name, MessageSound.Benefit);
+                    //        currentShieldPawn.recharge(1);
+                    //    }
+                    //}
                 }
             }
 

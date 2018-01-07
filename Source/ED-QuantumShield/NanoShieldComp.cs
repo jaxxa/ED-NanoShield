@@ -8,7 +8,7 @@ using Verse;
 namespace ED_NanoShield
 {
     [StaticConstructorOnStartup]
-    class CompNanoShield : ThingComp
+    class CompQuantumShield : ThingComp
     {
         private static Material BubbleMat = MaterialPool.MatFrom("Other/ShieldBubble", ShaderDatabase.Transparent);
 
@@ -36,24 +36,23 @@ namespace ED_NanoShield
             Vector3 s = new Vector3(num1, 1f, num1);
             Matrix4x4 matrix = new Matrix4x4();
             matrix.SetTRS(drawPos, Quaternion.AngleAxis(angle, Vector3.up), s);
-            Graphics.DrawMesh(MeshPool.plane10, matrix, CompNanoShield.BubbleMat, 0);
+            Graphics.DrawMesh(MeshPool.plane10, matrix, CompQuantumShield.BubbleMat, 0);
         }
 
-
-        public CompProperties_NanoShield Props
+        public CompProperties_QuantumShield Props
         {
             get
             {
-                return (CompProperties_NanoShield)this.props;
+                return (CompProperties_QuantumShield)this.props;
             }
         }
     }
 
-    class CompProperties_NanoShield : CompProperties
+    class CompProperties_QuantumShield : CompProperties
     {
-        public CompProperties_NanoShield()
+        public CompProperties_QuantumShield()
         {
-            this.compClass = typeof(CompNanoShield);
+            this.compClass = typeof(CompQuantumShield);
         }
     }
 }
