@@ -42,9 +42,9 @@ namespace Enhanced_Development.PersonalShields
             base.PostMake();
         }
         //On spawn, get the power component reference
-        public override void SpawnSetup(Map map)
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
-            base.SpawnSetup(map);
+            base.SpawnSetup(map, respawningAfterLoad);
             this.power = base.GetComp<CompPowerTrader>();
         }
 
@@ -110,8 +110,8 @@ namespace Enhanced_Development.PersonalShields
         {
             base.ExposeData();
 
-            Scribe_Values.LookValue(ref flag_charge, "flag_charge");
-            Scribe_Values.LookValue(ref NanoManager.currentCharge, "currentCharge");
+            Scribe_Values.Look(ref flag_charge, "flag_charge");
+            Scribe_Values.Look(ref NanoManager.currentCharge, "currentCharge");
             /*
             Scribe_Deep.LookDeep(ref shieldField, "shieldField");
 
@@ -328,19 +328,19 @@ namespace Enhanced_Development.PersonalShields
                                     if (currentThing.def.defName == "Apparel_PersonalNanoShield")
                                     {
                                         //Log.Message("Found:" + currentThing.def.defName);
-                                        Apparel_PersonalNanoShield currentShield = (Apparel_PersonalNanoShield)currentThing;
+                                        //Apparel_PersonalNanoShield currentShield = (Apparel_PersonalNanoShield)currentThing;
 
-                                        if (!currentShield.isCharged())
-                                        {
-                                            //currentShield.Energy += 10.0f;
+                                        //if (!currentShield.isCharged())
+                                        //{
+                                        //    //currentShield.Energy += 10.0f;
 
-                                            int chargeAmmount = 1;
+                                        //    int chargeAmmount = 1;
 
-                                            if (NanoManager.requestCharge(chargeAmmount))
-                                            {
-                                                currentShield.recharge(chargeAmmount);
-                                            }
-                                        }
+                                        //    if (NanoManager.requestCharge(chargeAmmount))
+                                        //    {
+                                        //        currentShield.recharge(chargeAmmount);
+                                        //    }
+                                        //}
                                     }
                                 }
                             }

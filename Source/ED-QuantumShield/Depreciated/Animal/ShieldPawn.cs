@@ -25,9 +25,9 @@ namespace Enhanced_Development.PersonalShields.Animal
         private SoundDef SoundAbsorbDamage = SoundDef.Named("PersonalShieldAbsorbDamage");
         private SoundDef SoundBreak = SoundDef.Named("PersonalShieldBroken");
 
-        public override void SpawnSetup(Map map)
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
-            base.SpawnSetup(map);
+            base.SpawnSetup(map, respawningAfterLoad);
             this.maxEnergy = 255;
         }
 
@@ -35,9 +35,9 @@ namespace Enhanced_Development.PersonalShields.Animal
         {
             base.ExposeData();
 
-            Scribe_Values.LookValue<int>(ref this.m_energy, "energy", 0, false);
-            Scribe_Values.LookValue<int>(ref this.maxEnergy, "maxEnergy", 0, false);
-            Scribe_Values.LookValue<ShieldStatePawn>(ref this.m_ShieldState, "shieldState", ShieldStatePawn.Inactive, false);
+            Scribe_Values.Look<int>(ref this.m_energy, "energy", 0, false);
+            Scribe_Values.Look<int>(ref this.maxEnergy, "maxEnergy", 0, false);
+            Scribe_Values.Look<ShieldStatePawn>(ref this.m_ShieldState, "shieldState", ShieldStatePawn.Inactive, false);
         }
 
         #region Gizmoes

@@ -1,4 +1,6 @@
-﻿using System;
+﻿/*
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -146,27 +148,27 @@ namespace Enhanced_Development.PersonalShields
                 return;
             }
 
-            /*
-            if (this.ShieldState == ShieldState.Resetting)
-            {
-                this.ticksToReset--;
-                if (this.ticksToReset <= 0)
-                {
-                    this.Reset();
-                }
-            }
-            else
-            {
-                if (this.ShieldState == ShieldState.Active)
-                {
-                    this.energy += this.EnergyGainPerTick;
-                    if (this.energy > this.EnergyMax)
-                    {
-                        this.energy = this.EnergyMax;
-                    }
-                }
-            }
-            */
+            
+            //if (this.ShieldState == ShieldState.Resetting)
+            //{
+            //    this.ticksToReset--;
+            //    if (this.ticksToReset <= 0)
+            //    {
+            //        this.Reset();
+            //    }
+            //}
+            //else
+            //{
+            //    if (this.ShieldState == ShieldState.Active)
+            //    {
+            //        this.energy += this.EnergyGainPerTick;
+            //        if (this.energy > this.EnergyMax)
+            //        {
+            //            this.energy = this.EnergyMax;
+            //        }
+            //    }
+            //}
+            
         }
         public override bool CheckPreAbsorbDamage(DamageInfo dinfo)
         {
@@ -192,10 +194,10 @@ namespace Enhanced_Development.PersonalShields
 
                 this.energy -= dinfo.Amount;
 
-                /*if (dinfo.Def == DamageDefOf.EMP)
-                {
-                    this.energy = -1f;
-                }*/
+                //if (dinfo.Def == DamageDefOf.EMP)
+                //{
+                //    this.energy = -1f;
+                //}
 
                 if (this.energy < 0f)
                 {
@@ -346,3 +348,5 @@ namespace Enhanced_Development.PersonalShields
         }
     }
 }
+
+*/
