@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\lib\B18\1722\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -42,9 +43,11 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\lib\B18\1722\UnityEngine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Gizmo_QuantumShieldStatus.cs" />
     <Compile Include="CompQuantumShield.cs" />
     <Compile Include="Depreciated\Animal\ShieldPawn.cs" />
     <Compile Include="Depreciated\Animal\Apparel_PersonalNanoShield.cs" />

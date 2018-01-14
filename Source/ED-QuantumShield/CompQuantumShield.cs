@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ED_QuantumShield;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,17 +13,30 @@ namespace ED_NanoShield
     {
         private static Material BubbleMat = MaterialPool.MatFrom("Other/ShieldBubble", ShaderDatabase.Transparent);
 
+        public override IEnumerable<Gizmo> CompGetGizmosExtra()
+        {
+            Gizmo_QuantumShieldStatus opt1 = new Gizmo_QuantumShieldStatus();
+            //opt1.shield = this;
+            yield return opt1;
+
+            //return base.CompGetGizmosExtra();
+        }
+
         public override void PostPreApplyDamage(DamageInfo dinfo, out bool absorbed)
         {
             base.PostPreApplyDamage(dinfo, out absorbed);
             if (absorbed)
+            {
                 return;
+            }
+
             absorbed = true;
+            
         }
 
         public override void CompTick()
         {
-            Log.Message("CompTick");
+            //Log.Message("CompTick");
             base.CompTick();
         }
 
