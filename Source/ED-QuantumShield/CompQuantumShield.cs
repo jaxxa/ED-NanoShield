@@ -11,7 +11,7 @@ namespace ED_NanoShield
     [StaticConstructorOnStartup]
     class CompQuantumShield : ThingComp
     {
-        public int ChargeLevelCurrent = 100;
+        public int ChargeLevelCurrent = 200;
 
         public int ChargeLevelMax = 200;
 
@@ -43,9 +43,23 @@ namespace ED_NanoShield
             {
                 return;
             }
+            
+            //Shield Depleted
+            if (this.ChargeLevelCurrent == 0)
+            {
+                return;
+            }
+
+            this.ChargeLevelCurrent -= dinfo.Amount;
+            if (this.ChargeLevelCurrent < 0)
+            {
+                this.ChargeLevelCurrent = 0;
+            }
+
 
             absorbed = true;
             
+
         }
 
         public override void CompTick()
