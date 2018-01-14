@@ -13,6 +13,12 @@ namespace ED_QuantumShield
     [StaticConstructorOnStartup]
     internal class Gizmo_QuantumShieldStatus : Gizmo
     {
+        public Gizmo_QuantumShieldStatus(CompQuantumShield QuantumShield)
+        {
+            this.QuantumShield = QuantumShield;
+        }
+
+
         public CompQuantumShield QuantumShield;
 
         private static readonly Texture2D FullShieldBarTex = SolidColorMaterials.NewSolidColorTexture(new Color(0.2f, 0.2f, 0.24f));
@@ -37,15 +43,17 @@ namespace ED_QuantumShield
                 rect2.height = overRect.height / 2f;
                 Text.Font = GameFont.Tiny;
                // Widgets.Label(rect2, this.QuantumShield.LabelCap);
-                Widgets.Label(rect2, "Temp");
+                Widgets.Label(rect2, "Quantum Shield Status");
                 Rect rect3 = rect;
                 rect3.yMin = overRect.height / 2f;
                 //float fillPercent = this.QuantumShield.Energy / Mathf.Max(1f, this.QuantumShield.GetStatValue(StatDefOf.EnergyShieldEnergyMax, true));
-                float fillPercent = ( 50 / 100);
+                //float fillPercent = 0.5f;
+                float fillPercent = Mathf.Min(1f, (float)this.QuantumShield.ChargeLevelCurrent / (float)this.QuantumShield.ChargeLevelMax);
+                Log.Message("Fill: " + fillPercent);
                 Widgets.FillableBar(rect3, fillPercent, Gizmo_QuantumShieldStatus.FullShieldBarTex, Gizmo_QuantumShieldStatus.EmptyShieldBarTex, false);
                 Text.Font = GameFont.Small;
                 Text.Anchor = TextAnchor.MiddleCenter;
-                Widgets.Label(rect3, (50 * 100f).ToString("F0") + " / " + (100 * 100f).ToString("F0"));
+                Widgets.Label(rect3, (this.QuantumShield.ChargeLevelCurrent).ToString("F0") + " / " + (this.QuantumShield.ChargeLevelMax).ToString("F0"));
                 Text.Anchor = TextAnchor.UpperLeft;
             }, true, false, 1f);
             return new GizmoResult(GizmoState.Clear);

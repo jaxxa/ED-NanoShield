@@ -11,15 +11,29 @@ namespace ED_NanoShield
     [StaticConstructorOnStartup]
     class CompQuantumShield : ThingComp
     {
+        public int ChargeLevelCurrent = 100;
+
+        public int ChargeLevelMax = 200;
+
+
+        
         private static Material BubbleMat = MaterialPool.MatFrom("Other/ShieldBubble", ShaderDatabase.Transparent);
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
-            Gizmo_QuantumShieldStatus opt1 = new Gizmo_QuantumShieldStatus();
-            //opt1.shield = this;
-            yield return opt1;
+            using (IEnumerator<Gizmo> enumerator = base.CompGetGizmosExtra().GetEnumerator())
+            {
+                if (enumerator.MoveNext())
+                {
+                    Gizmo c = enumerator.Current;
+                    yield return c;
+                    ;
+                }
+            }
 
-            //return base.CompGetGizmosExtra();
+            Gizmo_QuantumShieldStatus opt1 = new Gizmo_QuantumShieldStatus(this);
+            yield return opt1;
+            
         }
 
         public override void PostPreApplyDamage(DamageInfo dinfo, out bool absorbed)
