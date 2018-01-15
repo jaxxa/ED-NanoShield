@@ -16,8 +16,6 @@ namespace ED_QuantumShield.Settings
             base.ExposeData();
 
 //            Scribe_Values.Look<bool>(ref ShowLettersThreatBig, "ShowLettersThreatBig", true, true);
-
-
         }
 
 

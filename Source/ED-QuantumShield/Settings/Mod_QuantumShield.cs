@@ -11,8 +11,7 @@ namespace ED_QuantumShield.Settings
     {
 
         public static ModSettings_ED_QuantumShield Settings;
-
-
+        
         public Mod_QuantumShield(ModContentPack content) : base(content)
         {
             Mod_QuantumShield.Settings = GetSettings<ModSettings_ED_QuantumShield>();
@@ -23,8 +22,7 @@ namespace ED_QuantumShield.Settings
             return "ED-QuantumShield";
             //return base.SettingsCategory();
         }
-
-
+        
         public override void DoSettingsWindowContents(Rect inRect)
         {
             Settings.DoSettingsWindowContents(inRect);
