@@ -53,7 +53,7 @@
     <Compile Include="Depreciated\Animal\ShieldPawn.cs" />
     <Compile Include="Depreciated\Animal\Apparel_PersonalNanoShield.cs" />
     <Compile Include="Building_Shield_Charger.cs" />
-    <Compile Include="NanoManager.cs" />
+    <Compile Include="Depreciated\NanoManager.cs" />
     <Compile Include="Depreciated\Animal\ThingDef_PersonalNanoShield.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\ModSettings_QuantumShield.cs" />

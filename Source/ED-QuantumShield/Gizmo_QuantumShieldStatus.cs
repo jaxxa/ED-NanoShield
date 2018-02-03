@@ -48,7 +48,7 @@ namespace ED_QuantumShield
                 rect3.yMin = overRect.height / 2f;
                 //float fillPercent = this.QuantumShield.Energy / Mathf.Max(1f, this.QuantumShield.GetStatValue(StatDefOf.EnergyShieldEnergyMax, true));
                 //float fillPercent = 0.5f;
-                float fillPercent = Mathf.Min(1f, (float)this.QuantumShield.ChargeLevelCurrent / (float)this.QuantumShield.ChargeLevelMax);
+                float fillPercent = Mathf.Min(1f, (float)(Math.Max(1, this.QuantumShield.ChargeLevelCurrent)) / (float)this.QuantumShield.ChargeLevelMax);
                 Log.Message("Fill: " + fillPercent);
                 Widgets.FillableBar(rect3, fillPercent, Gizmo_QuantumShieldStatus.FullShieldBarTex, Gizmo_QuantumShieldStatus.EmptyShieldBarTex, false);
                 Text.Font = GameFont.Small;

@@ -70,29 +70,26 @@ namespace ED_NanoShield
         public override void PostDraw()
         {
             base.PostDraw();
-            
-            if (!this.ShouldDisplay)
-            {
-                return;
-            }
 
-            float num1 = Mathf.Lerp(1.2f, 1.55f, 100f);
-            Vector3 drawPos = this.parent.DrawPos;
-            drawPos.y = Altitudes.AltitudeFor(AltitudeLayer.Blueprint);
-            int num2 = 7;
-            if (num2 < 8)
+            if (this.ShouldDisplay)
             {
-                float num3 = (float)((double)(8 - num2) / 8.0 * 0.0500000007450581);
-                num1 -= num3;
+                float num1 = Mathf.Lerp(1.2f, 1.55f, 100f);
+                Vector3 drawPos = this.parent.DrawPos;
+                drawPos.y = Altitudes.AltitudeFor(AltitudeLayer.Blueprint);
+                int num2 = 7;
+                if (num2 < 8)
+                {
+                    float num3 = (float)((double)(8 - num2) / 8.0 * 0.0500000007450581);
+                    num1 -= num3;
+                }
+                float angle = (float)Rand.Range(0, 360);
+                Vector3 s = new Vector3(num1, 1f, num1);
+                Matrix4x4 matrix = new Matrix4x4();
+                matrix.SetTRS(drawPos, Quaternion.AngleAxis(angle, Vector3.up), s);
+                Graphics.DrawMesh(MeshPool.plane10, matrix, CompQuantumShield.BubbleMat, 0);
             }
-            float angle = (float)Rand.Range(0, 360);
-            Vector3 s = new Vector3(num1, 1f, num1);
-            Matrix4x4 matrix = new Matrix4x4();
-            matrix.SetTRS(drawPos, Quaternion.AngleAxis(angle, Vector3.up), s);
-            Graphics.DrawMesh(MeshPool.plane10, matrix, CompQuantumShield.BubbleMat, 0);
         }
-              
-
+        
         public CompProperties_QuantumShield Props
         {
             get
@@ -106,7 +103,7 @@ namespace ED_NanoShield
             base.PostExposeData();
             Scribe_Values.Look(ref ChargeLevelCurrent, "ChargeLevelCurrent");
         }
-        
+
         private bool ShouldDisplay
         {
             get
@@ -117,6 +114,10 @@ namespace ED_NanoShield
 
                 if (wearer != null && wearer.Spawned && !wearer.Dead && !wearer.Downed)
                 {
+                    if (this.ChargeLevelCurrent <= 0)
+                    {
+                        return false;
+                    }
                     if (wearer.InAggroMentalState)
                     {
                         return true;
@@ -138,7 +139,6 @@ namespace ED_NanoShield
                 return false;
             }
         }
-
     }
 
     class CompProperties_QuantumShield : CompProperties
@@ -147,9 +147,7 @@ namespace ED_NanoShield
         {
             this.compClass = typeof(CompQuantumShield);
         }
+
     }
-
-
-
 
 }
