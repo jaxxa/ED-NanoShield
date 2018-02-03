@@ -1,4 +1,5 @@
 ﻿using ED_QuantumShield;
+using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,9 @@ namespace ED_NanoShield
         public int ChargeLevelCurrent = 200;
 
         public int ChargeLevelMax = 200;
+        private int KeepDisplayingTicks = 1000;
+        private int lastKeepDisplayTick = -9999;
 
-
-        
         private static Material BubbleMat = MaterialPool.MatFrom("Other/ShieldBubble", ShaderDatabase.Transparent);
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
@@ -33,7 +34,7 @@ namespace ED_NanoShield
 
             Gizmo_QuantumShieldStatus opt1 = new Gizmo_QuantumShieldStatus(this);
             yield return opt1;
-            
+
         }
 
         public override void PostPreApplyDamage(DamageInfo dinfo, out bool absorbed)
@@ -43,23 +44,21 @@ namespace ED_NanoShield
             {
                 return;
             }
-            
+
             //Shield Depleted
-            if (this.ChargeLevelCurrent == 0)
+            if (this.ChargeLevelCurrent <= 0)
             {
                 return;
             }
 
             this.ChargeLevelCurrent -= dinfo.Amount;
-            if (this.ChargeLevelCurrent < 0)
-            {
-                this.ChargeLevelCurrent = 0;
-            }
-
+            this.lastKeepDisplayTick = Find.TickManager.TicksGame;
+            //if (this.ChargeLevelCurrent < 0)
+            //{
+            //    this.ChargeLevelCurrent = 0;
+            //}
 
             absorbed = true;
-            
-
         }
 
         public override void CompTick()
@@ -71,6 +70,12 @@ namespace ED_NanoShield
         public override void PostDraw()
         {
             base.PostDraw();
+            
+            if (!this.ShouldDisplay)
+            {
+                return;
+            }
+
             float num1 = Mathf.Lerp(1.2f, 1.55f, 100f);
             Vector3 drawPos = this.parent.DrawPos;
             drawPos.y = Altitudes.AltitudeFor(AltitudeLayer.Blueprint);
@@ -86,6 +91,7 @@ namespace ED_NanoShield
             matrix.SetTRS(drawPos, Quaternion.AngleAxis(angle, Vector3.up), s);
             Graphics.DrawMesh(MeshPool.plane10, matrix, CompQuantumShield.BubbleMat, 0);
         }
+              
 
         public CompProperties_QuantumShield Props
         {
@@ -98,8 +104,41 @@ namespace ED_NanoShield
         public override void PostExposeData()
         {
             base.PostExposeData();
-            
+            Scribe_Values.Look(ref ChargeLevelCurrent, "ChargeLevelCurrent");
         }
+        
+        private bool ShouldDisplay
+        {
+            get
+            {
+
+                //Pawn wearer = base.Wearer;
+                Pawn wearer = this.parent as Pawn;
+
+                if (wearer != null && wearer.Spawned && !wearer.Dead && !wearer.Downed)
+                {
+                    if (wearer.InAggroMentalState)
+                    {
+                        return true;
+                    }
+                    if (wearer.Drafted)
+                    {
+                        return true;
+                    }
+                    if (wearer.Faction.HostileTo(Faction.OfPlayer) && !wearer.IsPrisoner)
+                    {
+                        return true;
+                    }
+                    if (Find.TickManager.TicksGame < this.lastKeepDisplayTick + this.KeepDisplayingTicks)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+        }
+
     }
 
     class CompProperties_QuantumShield : CompProperties
@@ -108,6 +147,9 @@ namespace ED_NanoShield
         {
             this.compClass = typeof(CompQuantumShield);
         }
-        
     }
+
+
+
+
 }
