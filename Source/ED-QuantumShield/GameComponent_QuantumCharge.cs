@@ -25,7 +25,7 @@ namespace ED_QuantumShield
                 return;
             }
 
-            Log.Message("GameCompTick");
+            //Log.Message("GameCompTick");
         }
     }
 }

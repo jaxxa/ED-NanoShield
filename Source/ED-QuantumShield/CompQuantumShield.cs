@@ -7,7 +7,7 @@ using System.Text;
 using UnityEngine;
 using Verse;
 
-namespace ED_NanoShield
+namespace ED_QuantumShield
 {
     [StaticConstructorOnStartup]
     class CompQuantumShield : ThingComp
@@ -108,7 +108,7 @@ namespace ED_NanoShield
         {
             get
             {
-
+                return true;
                 //Pawn wearer = base.Wearer;
                 Pawn wearer = this.parent as Pawn;
 

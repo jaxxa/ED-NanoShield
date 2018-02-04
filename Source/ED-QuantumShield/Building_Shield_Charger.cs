@@ -7,9 +7,8 @@ using UnityEngine;
 using Verse;
 using RimWorld;
 using Enhanced_Development.PersonalShields.Nano;
-using ED_NanoShield;
 
-namespace Enhanced_Development.PersonalShields
+namespace ED_QuantumShield
 {
     [StaticConstructorOnStartup]
     public class Building_QuantumShield_Charger : Building

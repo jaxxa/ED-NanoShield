@@ -46,7 +46,7 @@
 		<defName>Building_Shield_Charger</defName>
 		<label>Nanite Shield Charging Station</label>
 		<description>Recharges Nanite Shield Modulators to colonists to protect them from injury and adds Shields to Animals. Human Shields can be crafted at the Machining Table</description>
-		<thingClass>Enhanced_Development.PersonalShields.Building_QuantumShield_Charger</thingClass>
+		<thingClass>ED_QuantumShield.Building_QuantumShield_Charger</thingClass>
 		<researchPrerequisites>
 			<li>Personal_Shield_research</li>
 		</researchPrerequisites>

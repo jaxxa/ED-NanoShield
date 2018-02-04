@@ -1,5 +1,4 @@
-﻿using ED_NanoShield;
-using RimWorld;
+﻿using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +48,7 @@ namespace ED_QuantumShield
                 //float fillPercent = this.QuantumShield.Energy / Mathf.Max(1f, this.QuantumShield.GetStatValue(StatDefOf.EnergyShieldEnergyMax, true));
                 //float fillPercent = 0.5f;
                 float fillPercent = Mathf.Min(1f, (float)(Math.Max(1, this.QuantumShield.ChargeLevelCurrent)) / (float)this.QuantumShield.ChargeLevelMax);
-                Log.Message("Fill: " + fillPercent);
+                //Log.Message("Fill: " + fillPercent);
                 Widgets.FillableBar(rect3, fillPercent, Gizmo_QuantumShieldStatus.FullShieldBarTex, Gizmo_QuantumShieldStatus.EmptyShieldBarTex, false);
                 Text.Font = GameFont.Small;
                 Text.Anchor = TextAnchor.MiddleCenter;
