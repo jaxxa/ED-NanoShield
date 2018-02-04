@@ -26,7 +26,7 @@ namespace ED_QuantumShield
 
         #endregion
 
-
+        //Constructor
         static Building_QuantumShield_Charger()
         {
             //Log.Message("Getting graphics");
@@ -35,11 +35,18 @@ namespace ED_QuantumShield
             UI_CHARGE_ON = ContentFinder<Texture2D>.Get("UI/ChargeON", true);
         }
 
+        #region Overrides
+
         //Dummy override
         public override void PostMake()
         {
             base.PostMake();
         }
+        public override void Draw()
+        {
+            base.Draw();
+        }
+
         //On spawn, get the power component reference
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
@@ -57,18 +64,14 @@ namespace ED_QuantumShield
             //    NanoManager.tick();
             //}
 
-            ////This no longer requires Power inorder to be usable in Caravans.
-            //if (this.flag_charge)
-            //{
-            //    this.rechargePawns();
-            //}
-        }
+            //This no longer requires Power inorder to be usable in Caravans.
 
-        public override void Draw()
-        {
-            base.Draw();
+            if (this.flag_charge)
+            {
+                this.rechargePawns();
+            }
         }
-
+        
         public override void DrawExtraSelectionOverlays()
         {
             GenDraw.DrawRadiusRing(base.Position, this.MAX_DISTANCE);
@@ -111,15 +114,6 @@ namespace ED_QuantumShield
 
             Scribe_Values.Look(ref flag_charge, "flag_charge");
             Scribe_Values.Look(ref NanoManager.currentCharge, "currentCharge");
-            /*
-            Scribe_Deep.LookDeep(ref shieldField, "shieldField");
-
-            shieldField.position = base.Position;
-
-            Scribe_Values.LookValue(ref flag_direct, "flag_direct");
-            Scribe_Values.LookValue(ref flag_indirect, "flag_indirect");
-            Scribe_Values.LookValue(ref flag_fireSupression, "flag_fireSupression");
-            Scribe_Values.LookValue(ref flag_shieldRepairMode, "flag_shieldRepairMode");*/
         }
 
         public override IEnumerable<Gizmo> GetGizmos()
@@ -152,7 +146,7 @@ namespace ED_QuantumShield
                 act.icon = UI_CHARGE_ON;
                 act.defaultLabel = "Charge Shields";
                 act.defaultDesc = "On";
-               // act.activateSound = SoundDef.Named("Click");
+                // act.activateSound = SoundDef.Named("Click");
                 //act.hotKey = KeyBindingDefOf.DesignatorDeconstruct;
                 //act.groupKey = 689736;
                 yield return act;
@@ -172,132 +166,63 @@ namespace ED_QuantumShield
             }
         }
 
-        /*
-        public override IEnumerable<Command> GetCommands()
-        {
-            IList<Command> CommandList = new List<Command>();
-            IEnumerable<Command> baseCommands = base.GetCommands();
-
-            if (baseCommands != null)
-            {
-                CommandList = baseCommands.ToList();
-            }
-
-            if (true)
-            {
-                //Upgrading
-                Command_Action command_Action_InstallShield = new Command_Action();
-
-                command_Action_InstallShield.defaultLabel = "Upgrade To NanoShield";
-
-                command_Action_InstallShield.icon = UI_UPGRADE;
-                command_Action_InstallShield.defaultDesc = "Upgrade To NanoShield";
-
-                command_Action_InstallShield.activateSound = SoundDef.Named("Click");
-                command_Action_InstallShield.action = new Action(this.tryReplacePawn);
-
-                CommandList.Add(command_Action_InstallShield);
-            }
-
-            //Charging
-            if (true)
-            {
-                //switchDirect
-                Command_Action command_Action_switchCharge = new Command_Action();
-
-                command_Action_switchCharge.defaultLabel = "Charge Shields";
-                if (flag_charge)
-                {
-                    command_Action_switchCharge.icon = UI_CHARGE_ON;
-                    command_Action_switchCharge.defaultDesc = "On";
-
-                }
-                else
-                {
-                    command_Action_switchCharge.icon = UI_CHARGE_OFF;
-                    command_Action_switchCharge.defaultDesc = "Off";
-                }
-
-                command_Action_switchCharge.activateSound = SoundDef.Named("Click");
-                command_Action_switchCharge.action = new Action(this.SwitchCharge);
-
-                CommandList.Add(command_Action_switchCharge);
-            }
-
-
-            return CommandList.AsEnumerable<Command>();
-        }
-        */
+        #endregion
+        
         private void SwitchCharge()
         {
             flag_charge = !flag_charge;
         }
 
-        //private void tryReplacePawn()
-        //{
-        //    if (this.power.PowerOn == true)
-        //    {
-        //        this.upgradePawns();
-        //    }
-        //}
 
-        private bool upgradePawns()
+        private IEnumerable<CompQuantumShield> ShieldCompsInRangeAndOfFaction()
+        {
+            IEnumerable<Pawn> _Pawns = this.Map.mapPawns.PawnsInFaction(Faction.OfPlayer).Where<Pawn>(t => t.Position.InHorDistOf(this.Position, this.MAX_DISTANCE));
+            IEnumerable<CompQuantumShield> _Comps = _Pawns.Select(p => p.TryGetComp<CompQuantumShield>());
+            return _Comps;
+        }
+
+
+        private void upgradePawns()
         {
             Log.Message("Upgrade");
             IEnumerable<Pawn> closePawns = Enhanced_Development.Utilities.Utilities.findPawnsInColony(this.Position, this.Map, this.MAX_DISTANCE);
 
             bool _AnyUpgraded = false;
 
-            if (closePawns != null)
+
+            foreach (CompQuantumShield _ShieldComp in this.ShieldCompsInRangeAndOfFaction())
             {
-                foreach (Pawn currentPawn in closePawns.ToList())
+                Log.Message("Adding");
+                if (!_ShieldComp.QuantumShieldActive)
                 {
-                    
-                    if (null == currentPawn.TryGetComp<CompQuantumShield>())
-                    {
-                        Log.Message("Adding");
-                        CompProperties_QuantumShield _CompProp = new CompProperties_QuantumShield();
-                        currentPawn.GetCompByDef(_CompProp);
-
-                        currentPawn.def.comps.Add(_CompProp);
-                        currentPawn.InitializeComps();
-                    }
-                    else
-                    {
-                        Log.Message("Skipping");
-                    }    
-                
-                    //if (currentPawn.apparel != null)
-                    //{
-                    //    //ThingDef personalShieldDef = ThingDef.Named("Apparel_PersonalNanoShield");
-
-                    //    //ThingDef stuff = GenStuff.RandomStuffFor(personalShieldDef);
-                    //    //Thing personalShield = ThingMaker.MakeThing(personalShieldDef, stuff);
-                    //    //currentPawn.apparel.Wear((Apparel)personalShield);
-
-                    //}
-                    //else if (currentPawn.GetType() == typeof(Enhanced_Development.PersonalShields.Animal.ShieldPawn))
-                    //{
-
-                    //    Enhanced_Development.PersonalShields.Animal.ShieldPawn currentShieldPawn;
-                    //    currentShieldPawn = (Enhanced_Development.PersonalShields.Animal.ShieldPawn)currentPawn;
-
-                    //    if (currentShieldPawn.ShieldState == Animal.ShieldStatePawn.Inactive)
-                    //    {
-                    //        _AnyUpgraded = true;
-                    //        Messages.Message("Activating Shields on " + currentShieldPawn.Name, MessageSound.Benefit);
-                    //        currentShieldPawn.recharge(1);
-                    //    }
-                    //}
+                    _ShieldComp.QuantumShieldActive = true;
+                    _AnyUpgraded = true;
                 }
             }
 
+            //if (closePawns != null)
+            //{
+            //    foreach (Pawn currentPawn in closePawns.ToList())
+            //    {
+            //        CompQuantumShield _ShieldComp = currentPawn.TryGetComp<CompQuantumShield>();
+            //        if (null != _ShieldComp)
+            //        {
+            //            Log.Message("Adding");
+            //            if (!_ShieldComp.QuantumShieldActive)
+            //            {
+            //                _ShieldComp.QuantumShieldActive = true;
+            //                _AnyUpgraded = true;
+            //            }
+            //        }
+            //    }
+            //}
+
             if (!_AnyUpgraded)
             {
-                Log.Message("No Valid Animals Found. Animals must be Tame and Spawned while the mod ED-PersonalAnimalShields was enabled.");
+                Log.Message("No Paws found to add Quantum Shields to.");
             }
 
-            return false;
+            return;
         }
 
         public void rechargePawns()
@@ -306,61 +231,12 @@ namespace ED_QuantumShield
             //Only every 10 ticks
             if (currentTick % 10 == 0)
             {
-
-                //IEnumerable<Pawn> pawns = Find.ListerPawns.ColonistsAndPrisoners;
-                IEnumerable<Pawn> pawns = this.Map.mapPawns.FreeColonists;
-
-                if (pawns != null)
+                
+                foreach (CompQuantumShield _ShieldComp in this.ShieldCompsInRangeAndOfFaction())
                 {
-                    IEnumerable<Pawn> closePawns = Enhanced_Development.Utilities.Utilities.findPawnsInColony(this.Position, this.Map, this.MAX_DISTANCE);
-
-                    if (closePawns != null)
-                    {
-                        foreach (Pawn currentPawn in closePawns.ToList())
-                        {
-                            if (currentPawn.apparel != null)
-                            {
-                                List<RimWorld.Apparel> currentInventory = currentPawn.apparel.WornApparel;
-
-                                foreach (Thing currentThing in currentInventory)
-                                {
-                                    if (currentThing.def.defName == "Apparel_PersonalNanoShield")
-                                    {
-                                        //Log.Message("Found:" + currentThing.def.defName);
-                                        //Apparel_PersonalNanoShield currentShield = (Apparel_PersonalNanoShield)currentThing;
-
-                                        //if (!currentShield.isCharged())
-                                        //{
-                                        //    //currentShield.Energy += 10.0f;
-
-                                        //    int chargeAmmount = 1;
-
-                                        //    if (NanoManager.requestCharge(chargeAmmount))
-                                        //    {
-                                        //        currentShield.recharge(chargeAmmount);
-                                        //    }
-                                        //}
-                                    }
-                                }
-                            }
-
-                            if (currentPawn.GetType() == typeof(Enhanced_Development.PersonalShields.Animal.ShieldPawn))
-                            {
-                                Enhanced_Development.PersonalShields.Animal.ShieldPawn currentShieldPawn;
-                                currentShieldPawn = (Enhanced_Development.PersonalShields.Animal.ShieldPawn)currentPawn;
-
-                                if (!currentShieldPawn.isCharged())
-                                {
-                                    int chargeAmmount = 1;
-
-                                    if (NanoManager.requestCharge(chargeAmmount))
-                                    {
-                                        currentShieldPawn.recharge(chargeAmmount);
-                                    }
-                                }
-
-                            }
-                        }
+                    if (_ShieldComp.QuantumShieldActive)
+                    {                        
+                        _ShieldComp.QuantumShieldChargeLevelCurrent += 10;
                     }
                 }
             }

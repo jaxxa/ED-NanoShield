@@ -7,10 +7,10 @@ using RimWorld;
 
 namespace ED_QuantumShield
 {
-    class GameComponent_QuantumCharge : Verse.GameComponent
+    class GameComponent_QuantumShield : Verse.GameComponent
     {
 
-        public GameComponent_QuantumCharge(Game game)
+        public GameComponent_QuantumShield(Game game)
         {
         }
 
@@ -22,9 +22,13 @@ namespace ED_QuantumShield
             int currentTick = Find.TickManager.TicksGame;
             if (currentTick % 20 != 0)
             {
-                //Log.Message("GameCompTick");
                 return;
             }
+
+
+            //Log.Message("GameCompTick");
+
+
 
         }
     }

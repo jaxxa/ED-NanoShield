@@ -25,7 +25,7 @@ namespace ED_QuantumShield
         {
             if (this.QuantumShieldActive)
             {
-                return "Quantum Shield:" + QuantumShieldChargeLevelCurrent + " / " + ChargeLevelMax + 
+                return "Quantum Shield:" + QuantumShieldChargeLevelCurrent + " / " + ChargeLevelMax +
                         Environment.NewLine + base.GetDescriptionPart();
             }
             return base.GetDescriptionPart();
@@ -43,9 +43,11 @@ namespace ED_QuantumShield
                 }
             }
 
-            Gizmo_QuantumShieldStatus opt1 = new Gizmo_QuantumShieldStatus(this);
-            yield return opt1;
-
+            if (this.QuantumShieldActive)
+            {
+                Gizmo_QuantumShieldStatus opt1 = new Gizmo_QuantumShieldStatus(this);
+                yield return opt1;
+            }
         }
 
         public override void PostPreApplyDamage(DamageInfo dinfo, out bool absorbed)
@@ -94,7 +96,7 @@ namespace ED_QuantumShield
                 Graphics.DrawMesh(MeshPool.plane10, matrix, CompQuantumShield.BubbleMat, 0);
             }
         }
-        
+
         public CompProperties_QuantumShield Props
         {
             get
