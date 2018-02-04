@@ -12,13 +12,24 @@ namespace ED_QuantumShield
     [StaticConstructorOnStartup]
     class CompQuantumShield : ThingComp
     {
-        public int ChargeLevelCurrent = 200;
+        public bool QuantumShieldActive = false;
+        public int QuantumShieldChargeLevelCurrent = 200;
 
         public int ChargeLevelMax = 200;
         private int KeepDisplayingTicks = 1000;
         private int lastKeepDisplayTick = -9999;
 
         private static Material BubbleMat = MaterialPool.MatFrom("Other/ShieldBubble", ShaderDatabase.Transparent);
+
+        public override string GetDescriptionPart()
+        {
+            if (this.QuantumShieldActive)
+            {
+                return "Quantum Shield:" + QuantumShieldChargeLevelCurrent + " / " + ChargeLevelMax + 
+                        Environment.NewLine + base.GetDescriptionPart();
+            }
+            return base.GetDescriptionPart();
+        }
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
@@ -40,38 +51,32 @@ namespace ED_QuantumShield
         public override void PostPreApplyDamage(DamageInfo dinfo, out bool absorbed)
         {
             base.PostPreApplyDamage(dinfo, out absorbed);
-            if (absorbed)
+
+            //If the shield is not Active or it was alreadt absorbed or it is out of charge, return
+            if (!QuantumShieldActive || absorbed || this.QuantumShieldChargeLevelCurrent <= 0)
             {
                 return;
             }
 
-            //Shield Depleted
-            if (this.ChargeLevelCurrent <= 0)
-            {
-                return;
-            }
+            //TODO Filter on Damage Type
 
-            this.ChargeLevelCurrent -= dinfo.Amount;
+            this.QuantumShieldChargeLevelCurrent -= dinfo.Amount;
             this.lastKeepDisplayTick = Find.TickManager.TicksGame;
-            //if (this.ChargeLevelCurrent < 0)
-            //{
-            //    this.ChargeLevelCurrent = 0;
-            //}
 
             absorbed = true;
         }
 
-        public override void CompTick()
-        {
-            //Log.Message("CompTick");
-            base.CompTick();
-        }
+        //public override void CompTick()
+        //{
+        //    //Log.Message("CompTick");
+        //    base.CompTick();
+        //}
 
         public override void PostDraw()
         {
             base.PostDraw();
 
-            if (this.ShouldDisplay)
+            if (this.QuantumShieldActive && this.ShouldDisplay)
             {
                 float num1 = Mathf.Lerp(1.2f, 1.55f, 100f);
                 Vector3 drawPos = this.parent.DrawPos;
@@ -101,20 +106,24 @@ namespace ED_QuantumShield
         public override void PostExposeData()
         {
             base.PostExposeData();
-            Scribe_Values.Look(ref ChargeLevelCurrent, "ChargeLevelCurrent");
+            Scribe_Values.Look(ref QuantumShieldActive, "QuantumShieldActive");
+            Scribe_Values.Look(ref QuantumShieldChargeLevelCurrent, "QuantumShieldChargeLevelCurrent");
         }
 
         private bool ShouldDisplay
         {
             get
             {
-                return true;
-                //Pawn wearer = base.Wearer;
+                if (!QuantumShieldActive)
+                {
+                    return false;
+                }
+
                 Pawn wearer = this.parent as Pawn;
 
                 if (wearer != null && wearer.Spawned && !wearer.Dead && !wearer.Downed)
                 {
-                    if (this.ChargeLevelCurrent <= 0)
+                    if (this.QuantumShieldChargeLevelCurrent <= 0)
                     {
                         return false;
                     }

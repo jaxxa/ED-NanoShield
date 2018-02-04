@@ -22,10 +22,10 @@ namespace ED_QuantumShield
             int currentTick = Find.TickManager.TicksGame;
             if (currentTick % 20 != 0)
             {
+                //Log.Message("GameCompTick");
                 return;
             }
 
-            //Log.Message("GameCompTick");
         }
     }
 }

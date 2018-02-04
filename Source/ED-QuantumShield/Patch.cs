@@ -39,19 +39,14 @@ namespace ED_QuantumShield
         // - returns a boolean that controls if original is executed (true) or not (false)
         public static bool InitializeCompsPrefix(ThingWithComps __instance)
         {
-            //Bail out if not dealing with a Pawn
-            if (!(__instance is Pawn))
+            //Only add to Pawns that dont have the come in their def already.
+            if (__instance is Pawn &&
+                !__instance.def.comps.Any(x => x is CompProperties_QuantumShield))
             {
-                return true;
-            }
-
-            CompProperties_QuantumShield _CompProp = new CompProperties_QuantumShield();
-
-            if (__instance is Pawn && !__instance.def.comps.Any(x => string.Equals(x.compClass.FullName, _CompProp.compClass.FullName)))
-            {
+                CompProperties_QuantumShield _CompProp = new CompProperties_QuantumShield();
                 __instance.def.comps.Add(_CompProp);
             }
-
+            
             return true;
         }
 
