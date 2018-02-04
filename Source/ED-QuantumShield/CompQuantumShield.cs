@@ -12,14 +12,20 @@ namespace ED_QuantumShield
     [StaticConstructorOnStartup]
     class CompQuantumShield : ThingComp
     {
+        #region Variables
+        //--Saved
         public bool QuantumShieldActive = false;
         public int QuantumShieldChargeLevelCurrent = 200;
 
+        //--Not Saved
         public int ChargeLevelMax = 200;
         private int KeepDisplayingTicks = 1000;
         private int lastKeepDisplayTick = -9999;
 
         private static Material BubbleMat = MaterialPool.MatFrom("Other/ShieldBubble", ShaderDatabase.Transparent);
+        #endregion
+
+        #region Overrides
 
         public override string GetDescriptionPart()
         {
@@ -96,6 +102,14 @@ namespace ED_QuantumShield
                 Graphics.DrawMesh(MeshPool.plane10, matrix, CompQuantumShield.BubbleMat, 0);
             }
         }
+        
+        public override void PostExposeData()
+        {
+            base.PostExposeData();
+            Scribe_Values.Look(ref QuantumShieldActive, "QuantumShieldActive");
+            Scribe_Values.Look(ref QuantumShieldChargeLevelCurrent, "QuantumShieldChargeLevelCurrent");
+        }
+        #endregion
 
         public CompProperties_QuantumShield Props
         {
@@ -104,14 +118,7 @@ namespace ED_QuantumShield
                 return (CompProperties_QuantumShield)this.props;
             }
         }
-
-        public override void PostExposeData()
-        {
-            base.PostExposeData();
-            Scribe_Values.Look(ref QuantumShieldActive, "QuantumShieldActive");
-            Scribe_Values.Look(ref QuantumShieldChargeLevelCurrent, "QuantumShieldChargeLevelCurrent");
-        }
-
+        
         private bool ShouldDisplay
         {
             get
@@ -150,6 +157,28 @@ namespace ED_QuantumShield
                 return false;
             }
         }
+
+        public int RechargeShield(int chargeAvalable)
+        {
+            if(!this.QuantumShieldActive || this.QuantumShieldChargeLevelCurrent >= this.ChargeLevelMax)
+            {
+                return 0;
+            }
+
+            this.QuantumShieldChargeLevelCurrent += chargeAvalable;
+
+            if (this.QuantumShieldChargeLevelCurrent <= this.ChargeLevelMax)
+            {
+                return chargeAvalable;
+            }
+            else
+            {
+                int _Overcharge = this.QuantumShieldChargeLevelCurrent - this.ChargeLevelMax;
+                this.QuantumShieldChargeLevelCurrent -= _Overcharge;
+                return chargeAvalable - _Overcharge;
+            }
+        }
+
     }
 
     class CompProperties_QuantumShield : CompProperties

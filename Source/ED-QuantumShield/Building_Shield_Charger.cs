@@ -236,7 +236,7 @@ namespace ED_QuantumShield
                 {
                     if (_ShieldComp.QuantumShieldActive)
                     {                        
-                        _ShieldComp.QuantumShieldChargeLevelCurrent += 10;
+                        _ShieldComp.RechargeShield(10);
                     }
                 }
             }
