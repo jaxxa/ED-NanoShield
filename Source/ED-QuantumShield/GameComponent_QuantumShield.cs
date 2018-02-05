@@ -10,8 +10,19 @@ namespace ED_QuantumShield
     class GameComponent_QuantumShield : Verse.GameComponent
     {
 
+        #region Variables
+        //--Saved
+        public static int ChargeLevelCurrent = 200;
+
+        //--Not Saved
+        public static int ChargeLevelMax = 1000;
+
+        //public static GameComponent_QuantumShield GameComp;
+        #endregion
+
         public GameComponent_QuantumShield(Game game)
         {
+            // GameComponent_QuantumShield.GameComp = this;
         }
 
         public override void GameComponentTick()
@@ -25,11 +36,46 @@ namespace ED_QuantumShield
                 return;
             }
 
-
+            GameComponent_QuantumShield.ReturnCharge(1);
             //Log.Message("GameCompTick");
 
+        }
 
+        public static int RequestCharge()
+        {
+            if (GameComponent_QuantumShield.ChargeLevelCurrent > 10)
+            {
+                GameComponent_QuantumShield.ChargeLevelCurrent -= 10;
+                return 10;
+            }
+            else
+            {
+                int _Temp = GameComponent_QuantumShield.ChargeLevelCurrent;
+                GameComponent_QuantumShield.ChargeLevelCurrent = 0;
+                return _Temp;
+            }
+        }
 
+        public static void ReturnCharge(int chargeLevel)
+        {
+            GameComponent_QuantumShield.ChargeLevelCurrent += chargeLevel;
+
+            if (GameComponent_QuantumShield.ChargeLevelCurrent > GameComponent_QuantumShield.ChargeLevelMax)
+            {
+                GameComponent_QuantumShield.ChargeLevelCurrent = GameComponent_QuantumShield.ChargeLevelMax;
+            }
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+
+            Scribe_Values.Look<int>(ref GameComponent_QuantumShield.ChargeLevelCurrent, "ChargeLevelCurrent");
+        }
+
+        public static string GetInspectStringStatus()
+        {
+            return "Global Quantum Charge: " + GameComponent_QuantumShield.ChargeLevelCurrent.ToString() + " / " + GameComponent_QuantumShield.ChargeLevelMax.ToString();
         }
     }
 }

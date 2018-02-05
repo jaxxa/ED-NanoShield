@@ -173,14 +173,12 @@ namespace ED_QuantumShield
             flag_charge = !flag_charge;
         }
 
-
         private IEnumerable<CompQuantumShield> ShieldCompsInRangeAndOfFaction()
         {
             IEnumerable<Pawn> _Pawns = this.Map.mapPawns.PawnsInFaction(Faction.OfPlayer).Where<Pawn>(t => t.Position.InHorDistOf(this.Position, this.MAX_DISTANCE));
             IEnumerable<CompQuantumShield> _Comps = _Pawns.Select(p => p.TryGetComp<CompQuantumShield>());
             return _Comps;
         }
-
 
         private void upgradePawns()
         {
@@ -200,23 +198,6 @@ namespace ED_QuantumShield
                 }
             }
 
-            //if (closePawns != null)
-            //{
-            //    foreach (Pawn currentPawn in closePawns.ToList())
-            //    {
-            //        CompQuantumShield _ShieldComp = currentPawn.TryGetComp<CompQuantumShield>();
-            //        if (null != _ShieldComp)
-            //        {
-            //            Log.Message("Adding");
-            //            if (!_ShieldComp.QuantumShieldActive)
-            //            {
-            //                _ShieldComp.QuantumShieldActive = true;
-            //                _AnyUpgraded = true;
-            //            }
-            //        }
-            //    }
-            //}
-
             if (!_AnyUpgraded)
             {
                 Log.Message("No Paws found to add Quantum Shields to.");
@@ -226,20 +207,32 @@ namespace ED_QuantumShield
         }
 
         public void rechargePawns()
-        {
+        {         
+
             int currentTick = Find.TickManager.TicksGame;
             //Only every 10 ticks
             if (currentTick % 10 == 0)
             {
-                
+                int _RemainingCharge = GameComponent_QuantumShield.RequestCharge();
+
+
                 foreach (CompQuantumShield _ShieldComp in this.ShieldCompsInRangeAndOfFaction())
                 {
                     if (_ShieldComp.QuantumShieldActive)
-                    {                        
-                        _ShieldComp.RechargeShield(10);
+                    {
+                        _RemainingCharge -= _ShieldComp.RechargeShield(_RemainingCharge);
                     }
                 }
+
+                GameComponent_QuantumShield.ReturnCharge(_RemainingCharge);
+
             }
+        }
+
+        public override string GetInspectString()
+        {
+            
+            return "Charge = " + GameComponent_QuantumShield.GetInspectStringStatus() + Environment.NewLine + base.GetInspectString();
         }
 
     }
