@@ -41,12 +41,12 @@ namespace ED_QuantumShield
 
         }
 
-        public static int RequestCharge()
+        public static int RequestCharge(int chargeToRequest)
         {
-            if (GameComponent_QuantumShield.ChargeLevelCurrent > 10)
+            if (GameComponent_QuantumShield.ChargeLevelCurrent > chargeToRequest)
             {
-                GameComponent_QuantumShield.ChargeLevelCurrent -= 10;
-                return 10;
+                GameComponent_QuantumShield.ChargeLevelCurrent -= chargeToRequest;
+                return chargeToRequest;
             }
             else
             {

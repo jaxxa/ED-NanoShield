@@ -15,10 +15,12 @@ namespace ED_QuantumShield
     {
         #region Variables
 
+        private int ReservePowerCurrent = 0;
+        private int ReservePowerMax = 400;
+
         public float MAX_DISTANCE = 5.0f;
         public bool flag_charge = false;
         CompPowerTrader power;
-        //NanoConnector nanoConnector;
 
         private static Texture2D UI_UPGRADE;
         private static Texture2D UI_CHARGE_OFF;
@@ -59,19 +61,39 @@ namespace ED_QuantumShield
             //Log.Message("Tick");
             base.Tick();
 
-            //if (this.power.PowerOn == true)
-            //{
-            //    NanoManager.tick();
-            //}
 
-            //This no longer requires Power inorder to be usable in Caravans.
-
-            if (this.flag_charge)
+            int currentTick = Find.TickManager.TicksGame;
+            //Only every 10 ticks
+            if (currentTick % 10 != 0)
             {
-                this.rechargePawns();
+                return;
+            }
+            if (this.power.PowerOn == true)
+            {
+                if (this.flag_charge)
+                {
+                    this.rechargePawns(10);
+                }
+
+                if (this.ReservePowerCurrent < this.ReservePowerMax)
+                {
+                    this.ReservePowerCurrent += 1;
+                }
+            }
+            else
+            {
+
+                if (this.flag_charge)
+                {
+                    if (this.ReservePowerCurrent > 0)
+                    {
+                        this.ReservePowerCurrent -= 1;
+                        this.ReservePowerCurrent += this.rechargePawns(1);
+                    }
+                }
             }
         }
-        
+
         public override void DrawExtraSelectionOverlays()
         {
             GenDraw.DrawRadiusRing(base.Position, this.MAX_DISTANCE);
@@ -113,7 +135,9 @@ namespace ED_QuantumShield
             base.ExposeData();
 
             Scribe_Values.Look(ref flag_charge, "flag_charge");
-            Scribe_Values.Look(ref NanoManager.currentCharge, "currentCharge");
+            Scribe_Values.Look(ref ReservePowerCurrent, "ReservePowerCurrent");
+            Scribe_Values.Look(ref ReservePowerMax, "ReservePowerMax");
+
         }
 
         public override IEnumerable<Gizmo> GetGizmos()
@@ -167,7 +191,7 @@ namespace ED_QuantumShield
         }
 
         #endregion
-        
+
         private void SwitchCharge()
         {
             flag_charge = !flag_charge;
@@ -206,33 +230,27 @@ namespace ED_QuantumShield
             return;
         }
 
-        public void rechargePawns()
-        {         
+        public int rechargePawns(int chargeToRequest)
+        {
 
-            int currentTick = Find.TickManager.TicksGame;
-            //Only every 10 ticks
-            if (currentTick % 10 == 0)
+            int _RemainingCharge = GameComponent_QuantumShield.RequestCharge(chargeToRequest);
+
+            foreach (CompQuantumShield _ShieldComp in this.ShieldCompsInRangeAndOfFaction())
             {
-                int _RemainingCharge = GameComponent_QuantumShield.RequestCharge();
-
-
-                foreach (CompQuantumShield _ShieldComp in this.ShieldCompsInRangeAndOfFaction())
+                if (_ShieldComp.QuantumShieldActive)
                 {
-                    if (_ShieldComp.QuantumShieldActive)
-                    {
-                        _RemainingCharge -= _ShieldComp.RechargeShield(_RemainingCharge);
-                    }
+                    _RemainingCharge -= _ShieldComp.RechargeShield(_RemainingCharge);
                 }
-
-                GameComponent_QuantumShield.ReturnCharge(_RemainingCharge);
-
             }
+
+            GameComponent_QuantumShield.ReturnCharge(_RemainingCharge);
+            return _RemainingCharge;
         }
 
         public override string GetInspectString()
         {
-            
-            return "Charge = " + GameComponent_QuantumShield.GetInspectStringStatus() + Environment.NewLine + base.GetInspectString();
+
+            return "Reserve = " + this.ReservePowerCurrent + " / " + this.ReservePowerMax + " - "  + GameComponent_QuantumShield.GetInspectStringStatus() + Environment.NewLine + base.GetInspectString();
         }
 
     }
