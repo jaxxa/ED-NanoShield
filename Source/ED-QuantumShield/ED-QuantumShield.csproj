@@ -53,16 +53,11 @@
     <Compile Include="GameComponent_QuantumShield.cs" />
     <Compile Include="Gizmo_QuantumShieldStatus.cs" />
     <Compile Include="CompQuantumShield.cs" />
-    <Compile Include="Depreciated\Animal\ShieldPawn.cs" />
-    <Compile Include="Depreciated\Animal\Apparel_PersonalNanoShield.cs" />
     <Compile Include="Building_Shield_Charger.cs" />
-    <Compile Include="Depreciated\NanoManager.cs" />
-    <Compile Include="Depreciated\Animal\ThingDef_PersonalNanoShield.cs" />
     <Compile Include="Patch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\ModSettings_QuantumShield.cs" />
     <Compile Include="Settings\Mod_QuantumShield.cs" />
-    <Compile Include="Utilities\Utilities.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

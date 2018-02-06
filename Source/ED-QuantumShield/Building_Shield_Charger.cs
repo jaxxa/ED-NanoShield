@@ -6,7 +6,6 @@ using System.Text;
 using UnityEngine;
 using Verse;
 using RimWorld;
-using Enhanced_Development.PersonalShields.Nano;
 
 namespace ED_QuantumShield
 {
@@ -98,37 +97,7 @@ namespace ED_QuantumShield
         {
             GenDraw.DrawRadiusRing(base.Position, this.MAX_DISTANCE);
         }
-
-        //public override string GetInspectString()
-        //{
-        //    StringBuilder stringBuilder = new StringBuilder();
-        //    //stringBuilder.Append(base.GetInspectString());
-        //    ///stringBuilder.Append(shieldField.GetInspectString());
-
-        //    /*
-        //    for (int i = 0, l = sparksParticle.Length; i < l; i++)
-        //    {
-        //        stringBuilder.AppendLine("   " + (i + 1) + ". " + sparksParticle[i].currentDir + " -> " + sparksParticle[i].currentStep);
-        //    }*/
-
-        //    string text;
-
-        //    text = "Nano Charge: " + NanoManager.getCurrentCharge() + " / " + NanoManager.getMaxCharge();
-        //    stringBuilder.AppendLine(text);
-
-        //    if (power != null)
-        //    {
-        //        text = power.CompInspectStringExtra();
-        //        if (!text.NullOrEmpty())
-        //        {
-        //            stringBuilder.AppendLine(text);
-        //        }
-        //    }
-
-
-        //    return stringBuilder.ToString();
-        //}
-
+        
         //Saving game
         public override void ExposeData()
         {
@@ -206,12 +175,8 @@ namespace ED_QuantumShield
 
         private void upgradePawns()
         {
-            Log.Message("Upgrade");
-            IEnumerable<Pawn> closePawns = Enhanced_Development.Utilities.Utilities.findPawnsInColony(this.Position, this.Map, this.MAX_DISTANCE);
-
             bool _AnyUpgraded = false;
-
-
+            
             foreach (CompQuantumShield _ShieldComp in this.ShieldCompsInRangeAndOfFaction())
             {
                 Log.Message("Adding");
@@ -232,7 +197,6 @@ namespace ED_QuantumShield
 
         public int rechargePawns(int chargeToRequest)
         {
-
             int _RemainingCharge = GameComponent_QuantumShield.RequestCharge(chargeToRequest);
 
             foreach (CompQuantumShield _ShieldComp in this.ShieldCompsInRangeAndOfFaction())
