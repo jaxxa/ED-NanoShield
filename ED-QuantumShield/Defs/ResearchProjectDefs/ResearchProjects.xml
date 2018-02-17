@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
+	<ResearchTabDef>
+		<defName>EnhancedDevelopment</defName>
+		<label>Enhanced Development</label>
+	</ResearchTabDef>
+	
 	<ResearchProjectDef>
-		<defName>Personal_Shield_research</defName>
-		<label>Personal Nanite Shield Research</label>
-		<description>Using nano technology Nanites have been developed that can be implanted in colonists to heal them or protect them from damage. Unfortunatly due to the limited power and size of the Nanites they mustt be replaced from the Colnist Upgrade Station after each use.
+		<defName>Personal_Quantum_Shield_Research</defName>
+		<label>Personal Quantum Shield Research</label>
+		<description>Allows the use of Quantum Virtual Particles to protect Colonists and Pets from damage.
+		This Quantum Charge must be recovered from the Quantum Shield Charging Station and pulls from a global charge level.
 		</description>
 		<baseCost>2000</baseCost>
 		<techLevel>Spacer</techLevel>
-		<prerequisites>
-			<li>Machining</li>
-		</prerequisites>
-		<researchViewX>14</researchViewX>
-		<researchViewY>1</researchViewY>
+		<tab>EnhancedDevelopment</tab>
+		<researchViewX>0</researchViewX>
+		<researchViewY>4</researchViewY>
 	</ResearchProjectDef>
 
 </Defs>
