@@ -7,9 +7,6 @@
 	<description>Version: 0.18.0.0
 Discussion, Non Steam Downloads and Source of this mod is available at: https://ludeon.com/forums/index.php?topic=37158
 
-This module adds an alternate version of Personal Shields into the game. 
-
-These shields function differently to the base game in that they require additional infrastructure, they are limited in the amount of charge that they can store and need to return to base to recharge. 
-The advantage that these have is that they block both incoming Melee and Ranged attacks while still allowing the user to deploy Ranged Weapons.
+This mod adds an alternate version of Personal Shields into the game. These shields function differently to the base game in that they require additional infrastructure, they are limited in the amount of charge that they can store and need to return to base to recharge. The advantage that these have is that they block both incoming Melee and Ranged attacks while still allowing the user to deploy Ranged Weapons and can be attached to Animals.
 	</description>
 </ModMetaData>
