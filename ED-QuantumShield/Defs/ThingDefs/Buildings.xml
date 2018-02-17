@@ -57,7 +57,7 @@
 		</graphicData>
 		<uiIconPath>Things/ShieldBuilding_Red</uiIconPath>
 		<specialDisplayRadius>5</specialDisplayRadius>
-		<minifiedDef>MinifiedSculpture</minifiedDef>
+		<minifiedDef>MinifiedFurniture</minifiedDef>
 		<comps>
 			<li Class="CompProperties_Power">
 				<compClass>CompPowerTrader</compClass>
