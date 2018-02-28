@@ -18,7 +18,6 @@ namespace ED_QuantumShield
         public int QuantumShieldChargeLevelCurrent = 200;
 
         //--Not Saved
-        public int ChargeLevelMax = 200;
         private int KeepDisplayingTicks = 1000;
         private int lastKeepDisplayTick = -9999;
 
@@ -31,7 +30,7 @@ namespace ED_QuantumShield
         {
             if (this.QuantumShieldActive)
             {
-                return "Quantum Shield:" + QuantumShieldChargeLevelCurrent + " / " + ChargeLevelMax +
+                return "Quantum Shield:" + QuantumShieldChargeLevelCurrent + " / " + Mod_QuantumShield.Settings.ShieldChargeLevelMax +
                         Environment.NewLine + base.GetDescriptionPart();
             }
             return base.GetDescriptionPart();
@@ -160,20 +159,20 @@ namespace ED_QuantumShield
 
         public int RechargeShield(int chargeAvalable)
         {
-            if(!this.QuantumShieldActive || this.QuantumShieldChargeLevelCurrent >= this.ChargeLevelMax)
+            if(!this.QuantumShieldActive || this.QuantumShieldChargeLevelCurrent >= Mod_QuantumShield.Settings.ShieldChargeLevelMax)
             {
                 return 0;
             }
 
             this.QuantumShieldChargeLevelCurrent += chargeAvalable;
 
-            if (this.QuantumShieldChargeLevelCurrent <= this.ChargeLevelMax)
+            if (this.QuantumShieldChargeLevelCurrent <= Mod_QuantumShield.Settings.ShieldChargeLevelMax)
             {
                 return chargeAvalable;
             }
             else
             {
-                int _Overcharge = this.QuantumShieldChargeLevelCurrent - this.ChargeLevelMax;
+                int _Overcharge = this.QuantumShieldChargeLevelCurrent - Mod_QuantumShield.Settings.ShieldChargeLevelMax;
                 this.QuantumShieldChargeLevelCurrent -= _Overcharge;
                 return chargeAvalable - _Overcharge;
             }

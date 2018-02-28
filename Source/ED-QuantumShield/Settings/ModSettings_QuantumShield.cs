@@ -5,17 +5,30 @@ using System.Text;
 using UnityEngine;
 using Verse;
 
-namespace ED_QuantumShield.Settings
+namespace ED_QuantumShield
 {
-    class ModSettings_ED_QuantumShield : ModSettings
+    class ModSettings_QuantumShield : ModSettings
     {
+        //Mod_QuantumShield.Settings.BuildingChargeDelay
+        public int ShieldChargeLevelMax;
 
+        public int BuildingChargeDelay;
+        public int BuildingChargeAmount;
+        public int BuildingReservePowerMax;
+        
 
         public override void ExposeData()
         {
             base.ExposeData();
 
-//            Scribe_Values.Look<bool>(ref ShowLettersThreatBig, "ShowLettersThreatBig", true, true);
+            Scribe_Values.Look(ref ShieldChargeLevelMax, "ShieldChargeLevelMax", 200);
+
+            Scribe_Values.Look(ref BuildingChargeDelay, "BuildingChargeDelay", 100);
+            Scribe_Values.Look(ref BuildingChargeAmount, "BuildingChargeAmount", 100);
+
+            Scribe_Values.Look(ref BuildingReservePowerMax, "BuildingReservePowerMax", 400);
+
+            //            Scribe_Values.Look<bool>(ref ShowLettersThreatBig, "ShowLettersThreatBig", true, true);
         }
 
 

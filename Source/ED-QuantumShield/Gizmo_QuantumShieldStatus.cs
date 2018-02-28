@@ -43,12 +43,12 @@ namespace ED_QuantumShield
                 Widgets.Label(rect2, "Quantum Shield Status");
                 Rect rect3 = rect;
                 rect3.yMin = overRect.height / 2f;
-                float fillPercent = Mathf.Min(1f, (float)(Math.Max(1, this.QuantumShield.QuantumShieldChargeLevelCurrent)) / (float)this.QuantumShield.ChargeLevelMax);
+                float fillPercent = Mathf.Min(1f, (float)(Math.Max(1, this.QuantumShield.QuantumShieldChargeLevelCurrent)) / (float)Mod_QuantumShield.Settings.ShieldChargeLevelMax);
                 //Log.Message("Fill: " + fillPercent);
                 Widgets.FillableBar(rect3, fillPercent, Gizmo_QuantumShieldStatus.FullShieldBarTex, Gizmo_QuantumShieldStatus.EmptyShieldBarTex, false);
                 Text.Font = GameFont.Small;
                 Text.Anchor = TextAnchor.MiddleCenter;
-                Widgets.Label(rect3, (this.QuantumShield.QuantumShieldChargeLevelCurrent).ToString("F0") + " / " + (this.QuantumShield.ChargeLevelMax).ToString("F0"));
+                Widgets.Label(rect3, (this.QuantumShield.QuantumShieldChargeLevelCurrent).ToString("F0") + " / " + (Mod_QuantumShield.Settings.ShieldChargeLevelMax).ToString("F0"));
                 Text.Anchor = TextAnchor.UpperLeft;
             }, true, false, 1f);
             return new GizmoResult(GizmoState.Clear);

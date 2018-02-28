@@ -15,7 +15,6 @@ namespace ED_QuantumShield
         #region Variables
 
         private int ReservePowerCurrent = 0;
-        private int ReservePowerMax = 400;
 
         public float MAX_DISTANCE = 5.0f;
         public bool flag_charge = false;
@@ -43,6 +42,7 @@ namespace ED_QuantumShield
         {
             base.PostMake();
         }
+
         public override void Draw()
         {
             base.Draw();
@@ -63,7 +63,7 @@ namespace ED_QuantumShield
 
             int currentTick = Find.TickManager.TicksGame;
             //Only every 10 ticks
-            if (currentTick % 10 != 0)
+            if (currentTick % Mod_QuantumShield.Settings.BuildingChargeDelay != 0)
             {
                 return;
             }
@@ -71,10 +71,10 @@ namespace ED_QuantumShield
             {
                 if (this.flag_charge)
                 {
-                    this.rechargePawns(10);
+                    this.rechargePawns(Mod_QuantumShield.Settings.BuildingChargeAmount);
                 }
 
-                if (this.ReservePowerCurrent < this.ReservePowerMax)
+                if (this.ReservePowerCurrent < Mod_QuantumShield.Settings.BuildingReservePowerMax)
                 {
                     this.ReservePowerCurrent += 1;
                 }
@@ -105,7 +105,6 @@ namespace ED_QuantumShield
 
             Scribe_Values.Look(ref flag_charge, "flag_charge");
             Scribe_Values.Look(ref ReservePowerCurrent, "ReservePowerCurrent");
-            Scribe_Values.Look(ref ReservePowerMax, "ReservePowerMax");
 
         }
 
@@ -214,7 +213,7 @@ namespace ED_QuantumShield
         public override string GetInspectString()
         {
 
-            return "Reserve = " + this.ReservePowerCurrent + " / " + this.ReservePowerMax + " - "  + GameComponent_QuantumShield.GetInspectStringStatus() + Environment.NewLine + base.GetInspectString();
+            return "Reserve = " + this.ReservePowerCurrent + " / " + Mod_QuantumShield.Settings.BuildingReservePowerMax + " - "  + GameComponent_QuantumShield.GetInspectStringStatus() + Environment.NewLine + base.GetInspectString();
         }
 
     }
