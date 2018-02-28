@@ -1,5 +1,5 @@
-# ED-NanoShield
-This is the Readme for the Mod, ED-NanoShield, for the Game Rimworld.
+# ED-QuantumShield
+This is the Readme for the Mod, ED-QuantumShield, for the Game Rimworld.
 
 Additional details can be found in About.xml
 
@@ -18,3 +18,6 @@ Additional details can be found in About.xml
 *Alpha 16 Update
 
 0.18.0.0
+* Update to B18,
+* Rebranding as ED-QuantumShield from ED-NanoShield
+* Complete Rewrite
