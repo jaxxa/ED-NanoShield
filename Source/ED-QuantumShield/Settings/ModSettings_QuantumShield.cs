@@ -17,6 +17,7 @@ namespace ED_QuantumShield
         public int BuildingReservePowerMax;
 
 
+
         public override void ExposeData()
         {
             base.ExposeData();
@@ -28,10 +29,11 @@ namespace ED_QuantumShield
 
             Scribe_Values.Look(ref BuildingReservePowerMax, "BuildingReservePowerMax", 400);
 
+
+
             //            Scribe_Values.Look<bool>(ref ShowLettersThreatBig, "ShowLettersThreatBig", true, true);
         }
-
-
+        
         public void DoSettingsWindowContents(Rect canvas)
         {
             Listing_Standard listing_Standard = new Listing_Standard();
@@ -52,8 +54,7 @@ namespace ED_QuantumShield
             _listing_Standard_ShieldChargeLevelMax.NewColumn();
             _listing_Standard_ShieldChargeLevelMax.IntSetter(ref ShieldChargeLevelMax, 200, "Default");
             _listing_Standard_ShieldChargeLevelMax.End();
-
-
+            
             //BuildingChargeDelay
             listing_Standard.GapLine(12f);
             listing_Standard.Label("BuildingChargeDelay (Default 30, measuered in Ticks):" + BuildingChargeDelay.ToString());

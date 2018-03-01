@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using Verse;
+using Verse.Sound;
 
 namespace ED_QuantumShield
 {
@@ -20,6 +21,7 @@ namespace ED_QuantumShield
         //--Not Saved
         private int KeepDisplayingTicks = 1000;
         private int lastKeepDisplayTick = -9999;
+        private Vector3 impactAngleVect;
 
         private static Material BubbleMat = MaterialPool.MatFrom("Other/ShieldBubble", ShaderDatabase.Transparent);
         #endregion
@@ -68,9 +70,22 @@ namespace ED_QuantumShield
             //TODO Filter on Damage Type
 
             this.QuantumShieldChargeLevelCurrent -= dinfo.Amount;
-            this.lastKeepDisplayTick = Find.TickManager.TicksGame;
 
             absorbed = true;
+
+
+            this.lastKeepDisplayTick = Find.TickManager.TicksGame;
+
+            SoundDefOf.EnergyShieldAbsorbDamage.PlayOneShot(new TargetInfo(this.parent.Position, base.parent.Map, false));
+            this.impactAngleVect = Vector3Utility.HorizontalVectorFromAngle(dinfo.Angle);
+            Vector3 loc = base.parent.TrueCenter() + this.impactAngleVect.RotatedBy(180f) * 0.5f;
+            float num = Mathf.Min(10f, 2f + (float)dinfo.Amount / 10f);
+            MoteMaker.MakeStaticMote(loc, base.parent.Map, ThingDefOf.Mote_ExplosionFlash, num);
+            int num2 = (int)num;
+            for (int i = 0; i < num2; i++)
+            {
+                MoteMaker.ThrowDustPuff(loc, base.parent.Map, Rand.Range(0.8f, 1.2f));
+            }
         }
 
         //public override void CompTick()
